@@ -10,8 +10,15 @@ public class Vendeur extends Utilisateur{
 	
 	public Enchere creationEnchere(long pMin, long pReserve, String identifiant, String description, String etat)
 	{
-		new Enchere(pMin, pReserve, this.login, identifiant, description, etat).DatelimiteEnchere();
-		return new Enchere(pMin, pReserve, this.login, identifiant, description, etat);
+		new Enchere(pMin, pReserve, this, identifiant, description, etat).DatelimiteEnchere();
+		return new Enchere(pMin, pReserve, this, identifiant, description, etat);
 	}
-	public void emettreOffre(){};
+	public Offre emettreOffre(Enchere en, long prixO) // a revoir
+	{
+		if(checkOffrePrice(en, prixO) && checkUserIdentity(en))
+		return new Offre(this, en, prixO);
+		else
+		return new Offre();
+	}
+
 }

@@ -6,7 +6,7 @@ public class Main {
 		Vendeur a = new Vendeur("toto", "", "");
 		Enchere en = a.creationEnchere(0, 0, "", "", "");
 		System.out.println(en.etatEnchere);
-		System.out.println(en.utilisateurLogin);
+		//System.out.println(en.utilisateurLogin);
 	}
 
 }

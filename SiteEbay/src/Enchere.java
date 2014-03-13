@@ -9,16 +9,16 @@ public class Enchere extends Objet{
 	private final Date minute = new Date(60000);
 	protected long prixMinimum = 0;
 	protected long prixReserve = 0;
-	protected String utilisateurLogin = "";
+	protected Vendeur vendeur;
 	protected String etatEnchere = "";
 	
-	public Enchere(long pMin, long pReserve, String userName, String identifiant, String description, String etat) 
+	public Enchere(long pMin, long pReserve, Vendeur v, String identifiant, String description, String etat) 
 	{
 		super(identifiant,description);
 		this.dateEmission = new Date();
 		//this.dateLimite = new Date(dateEmission.getTime() + 24*30*hour.getTime()); //Date emission + 30 jours
 		this.dateLimite = new Date(dateEmission.getTime() + minute.getTime()); //Date emission + 1 minute
-		this.utilisateurLogin = userName;
+		this.vendeur = v;
 		this.prixMinimum = pMin;
 		this.prixReserve = pReserve;
 		this.etatEnchere = etat;
