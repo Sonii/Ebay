@@ -18,7 +18,7 @@ public class Vendeur extends Utilisateur{
 		if(checkOffrePrice(en, prixO) && checkUserIdentity(en))
 		return new Offre(this, en, prixO);
 		else
-		return new Offre();
+		return null;
 	}
 
 }

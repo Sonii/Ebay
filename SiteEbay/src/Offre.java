@@ -11,6 +11,5 @@ public class Offre {
 		 this.enchere = en;
 		 this.prixOffre = prixO;
 	 }
-	  public Offre() {};
 	  
 }
