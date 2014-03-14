@@ -24,12 +24,30 @@ public class Enchere extends Objet{
 		this.etatEnchere = etat;
 	}
 	
+	public String getEtat()
+	{
+		return this.etatEnchere;
+	}
+	public void setEtat(String etat)
+	{
+		this.etatEnchere = etat;
+	}
+	public Date getDateEmission()
+	{
+		return this.dateEmission;
+	}
+	
+	public Date getDateLimite()
+	{
+		return this.dateLimite;
+	}
+	
 	/* Après une minute l'etat de l'offre passe à l'état terminé */
 	public void DatelimiteEnchere()
 	{
 		Date now;
-		System.out.println(this.dateEmission);
-		System.out.println(this.dateLimite);
+		System.out.println("Voici la date d'emission : "+this.dateEmission);
+		System.out.println("Voici la date dans la quelle l'enchere est supposé s'arreter : "+this.dateLimite);
 		while(true) 
 		{
 			now = new Date();
@@ -37,7 +55,7 @@ public class Enchere extends Objet{
 			{
 				this.etatEnchere = "terminé";
 				System.out.println("terminé");
-				System.out.println(now);
+				System.out.println("Voici la date où l'enchere s'arrete : "+now);
 				return;
 			}
 			

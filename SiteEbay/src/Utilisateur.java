@@ -1,34 +1,40 @@
+import java.util.*;
+
 
 public abstract class Utilisateur {
 	
 	protected String login = "";
 	protected String nom = "";
 	protected String prenom = "";
+	protected ArrayList<Offre> offres;
+	protected TypeUtilisateur type;
+	protected ArrayList<Enchere> encheres;
 	
-	abstract Offre emettreOffre(Enchere en, long prixO);
 	
-	public boolean checkOffrePrice(Enchere en, long prixOffre)
+	protected abstract Enchere creeEnchere(long pMin, long pReserve, String identifiant, String description, String etat);
+	protected abstract Offre creeOffre(Enchere en, long prixO);
+
+
+	public boolean verficationPrixOffre(Enchere en, long prixOffre)
 	{
-		  if(prixOffre < en.prixMinimum)
-		  {
-			  System.out.println("Vous ne pouvez pas emettre une offre avec un prix inférieur à celui de l'enchère en question");
-			  return false;
-		  }
-		  else
-		  {
-			  return true;
-		  }
+		try
+		{
+			if(prixOffre > en.prixMinimum)
+			{
+				return true;
+			}
+			else
+			{
+				System.out.println("Vous ne pouvez pas emettre une offre avec un prix inférieur au prix minimum de l'enchère en question");
+				return false;
+			}
+		}catch(Exception e)
+		{
+			System.out.println("Vérifiez bien que votre enchere existe");
+			return false;
+		}
 	}
-	public boolean checkUserIdentity(Enchere en)
-	  {
-		  if(this.login.equals(en.vendeur.login))
-		  {
-			  System.out.println("Vous ne pouvez pas emettre une offre sur votre propre enchère");
-			  return false;
-		  }
-		  else
-		  {
-			  return true;
-		  }
-	  }
+	
+	
+	
 }
