@@ -4,25 +4,24 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Alerte alerte = new Alerte();
-		UsineUtilisateur usine = new UsineUtilisateur();
-		Utilisateur toto = usine.CreeUtilisateur(TypeUtilisateur.Vendeur, "toto", "", "", alerte);
-		System.out.println(alerte.utilisateur.get(0).login); 
-		//Enchere en = toto.creeEnchere(110, 0, "", "", "");
-		//System.out.println(toto.encheres.get(0).prixMinimum);
-		Utilisateur hajar = usine.CreeUtilisateur(TypeUtilisateur.Achteur, "hajar", "", "", alerte);
-		//Enchere e = hajar.creeEnchere(10, 0, "", "", "");
-		//Offre o = hajar.creeOffre(e, 0);
-		Enchere enn = toto.creeEnchere(0, 0, "", "", "");
-		Offre off = toto.creeOffre(enn, 10);
-		//System.out.println(toto.offres.get(0).getPrixOffre());
-		Offre offf = hajar.creeOffre(enn, 100);
-		System.out.println(hajar.offres.get(0).prixOffre);
+		Offre offre1 = new Offre(null, 10);
+		Offre offre2 = new Offre(null, 11);
+		Offre offre3 = new Offre(null, 13);
 		
-		/*Vendeur a = new Vendeur("toto", "", "");
-		Enchere en = a.creationEnchere(0, 0, "", "", "");
-		System.out.println(en.etatEnchere);
-		//System.out.println(en.utilisateurLogin);*/
+		ArrayList<Offre> offre = new ArrayList<Offre>();
+		offre.add(offre3);
+		offre.add(offre1);
+		offre.add(offre2);
+		offre.add(offre3);
+		
+		Collections.sort(offre, new OffreComparator());
+		for(Offre off : offre)
+		{
+			System.out.println(off.getPrixOffre());
+			
+		}
+		System.out.println(offre.get(3).getPrixOffre());
+
 	}
 
 }
