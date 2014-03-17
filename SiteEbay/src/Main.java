@@ -21,6 +21,9 @@ public class Main {
 		en.CreeOffre(hajar, 11);
 		//en.ConfigurationAlerteEnchereAnnulee(hajar, false);
 		toto.AnnuleEnchere(en);
+		en.CreeOffre(hajar, 11);
+		System.out.println(en.getPrixReserve(toto));
+		System.out.println(en.getPrixReserve(hajar));
 		
 		//en.ConfigurationAlertePrixReserve(hajar, false);
 		//en.ConfigurationAlerteOffreSup(hajar, false);

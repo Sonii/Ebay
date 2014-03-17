@@ -19,7 +19,7 @@ public class Alerte {
 	public static void prixReserveAtteint(Offre offre, Enchere en) // A modifier Alertes
 	{
 		//if((en.getPrixReserve() <= offre.getPrixOffre()) && (en.getListeOffres().get(en.getListeOffres().size() - 2).getPrixOffre() < en.getPrixReserve()))
-		if(en.getPrixReserve() <= offre.getPrixOffre())
+		if(en.getPrixReserve(en.getUtilisateur()) <= offre.getPrixOffre())
 		{
 			for(Offre o : en.getListeOffres())
 			{

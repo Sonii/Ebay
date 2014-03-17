@@ -42,7 +42,7 @@ public class Enchere {
 	
 	public Offre CreeOffre(Utilisateur utilisateur, float prixO)
 	{
-		if(this.etatEnchere != EtatEnchere.Annulée)
+		if(this.etatEnchere == EtatEnchere.Publiée)
 		{
 			if((!(this.utilisateur.equals(utilisateur.getLogin())) && (prixO >= this.getPrixMinimum())))
 			{
@@ -51,6 +51,7 @@ public class Enchere {
 				{
 					this.ajouteAlerte(new Alerte(utilisateur, true,true,true,true));
 				}
+				utilisateur.getListeEncheresVisibles().add(this); // On ajoute l'enchere à la liste des enchere visibles de l'achteur 
 				Alerte.AlerteVendeur(this.getUtilisateur(), new Offre(utilisateur, prixO)); // A chaque fois qu'une offre est émise le vendeur est prévenu
 				this.ajouteOffre(new Offre(utilisateur, prixO)); // On ajoute l'offre au tableau
 				Collections.sort(offres, new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
@@ -76,7 +77,7 @@ public class Enchere {
 		}
 		else
 		{
-			System.out.println("Cette offre a été annulée par son vendeur");
+			System.out.println("Cette offre a été annulée par son vendeur ou terminée");
 			return null;
 		}
 	}
@@ -209,9 +210,17 @@ public class Enchere {
 		return this.offres;
 	}
 	
-	protected float getPrixReserve()
+	protected Float getPrixReserve(Utilisateur user)
 	{
-		return this.prixReserve;
+		if(this.utilisateur.equals(user))
+		{
+			return this.prixReserve;
+		}
+		else
+		{
+			System.out.println("Le prix de reserve d'une enchere n'est visible que par son vendeur");
+			return null;
+		}
 	}
 	
 	protected void setEtatEnchere(EtatEnchere etat)

@@ -8,6 +8,7 @@ public class Utilisateur {
 	private String nom = "";
 	private ModeConnexion modeConnexion;
 	private ArrayList<Enchere> enchere;
+	private ArrayList<Enchere> encheresVisibles;
 	
 	public Utilisateur(String login, String prenom, String nom)
 	{
@@ -15,6 +16,7 @@ public class Utilisateur {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.enchere = new ArrayList<Enchere>();
+		this.encheresVisibles = new ArrayList<Enchere>();
 	}
 	
 	protected String getNom()
@@ -40,21 +42,6 @@ public class Utilisateur {
 	protected void setModeConnexion(ModeConnexion mode)
 	{
 		this.modeConnexion = mode;
-	}
-	
-	protected void setLogin(String login)
-	{
-		this.login = login;
-	}
-	
-	protected void setNom(String nom)
-	{
-		this.nom = nom;
-	}
-	
-	protected void setPrenom(String prenom)
-	{
-		this.prenom = prenom;
 	}
 	
 	protected void seConnecte()
@@ -98,10 +85,11 @@ public class Utilisateur {
 	{
 		if(this.equals(en.getUtilisateur()) && (en != null))
 		{
-			if(en.getListeOffres().get(en.getListeOffres().size() - 1).getPrixOffre() < en.getPrixReserve()) // On vérifie bien que le prix de reserve n'as pas été atteint
+			if(en.getListeOffres().get(en.getListeOffres().size() - 1).getPrixOffre() < en.getPrixReserve(en.getUtilisateur())) // On vérifie bien que le prix de reserve n'as pas été atteint
 			{
 				en.setEtatEnchere(EtatEnchere.Annulée);
 				Alerte.EnchereAnnulee(en);
+				ListeEnchereSingleton.getInstance().supprimeEnchere(en);
 			}
 			else
 			{
@@ -112,6 +100,11 @@ public class Utilisateur {
 		{
 			System.out.println("Vérifiez que l'enchere que vous voulez publiez existe bien");
 		}
+	}
+	
+	protected ArrayList<Enchere> getListeEncheresVisibles()
+	{
+		return this.encheresVisibles;
 	}
 	
 	
