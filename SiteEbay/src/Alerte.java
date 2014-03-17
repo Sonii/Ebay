@@ -62,5 +62,46 @@ public class Alerte {
 		}
 	}
 	
+	public static void EnchereAnnulee(Enchere en)
+	{
+		for(Offre o : en.getListeOffres())
+		{
+			for(Alerte alerte : en.getListeAlertes())
+			{
+				if(o.getUtilisateur().equals(alerte.user))
+				{
+					if(alerte.enchereAnnulee == true)
+					{
+						System.out.println("Alerte : l'enchere " + en.getObjet().getIdentifiant() + " vient d'être annulée par son vendeur");
+					}
+				}
+			}
+		}
+	}
+	
+	public static void EnchereTerminee(Enchere en)
+	{
+		int i = 0;
+		for(Offre o : en.getListeOffres())
+		{
+			while(i < en.getListeAlertes().size() - 1)
+			{
+				for(Alerte alerte : en.getListeAlertes())
+				{
+					if(o.getUtilisateur().equals(alerte.user))
+					{
+						if(alerte.enchereTerminee == true)
+						{
+							System.out.println("Alerte : l'enchere " + en.getObjet().getIdentifiant() + " vient d'être vendue à un autre achteur");
+						}
+					}
+				}
+				
+				i++;
+			}
+			if(o.equals(en.getListeOffres().get(en.getListeOffres().size() - 1)))
+				System.out.println("Félicitation : Vous avez eu l'enchere " + en.getObjet().getIdentifiant());
+		}
+	}
 	
 }

@@ -26,25 +26,7 @@ public class Enchere {
 		this.dateExpiration = new Date(dateCreation.getTime() + new Date(2000).getTime());
 	}
 	
-	protected ArrayList<Alerte> getListeAlertes()
-	{
-		return this.alertes;
-	}
-	
-	protected ArrayList<Offre> getListeOffres()
-	{
-		return this.offres;
-	}
-	
-	protected float getPrixReserve()
-	{
-		return this.prixReserve;
-	}
-	
-	protected void setEtatEnchere(EtatEnchere etat)
-	{
-		this.etatEnchere = etat;
-	}
+	/*Ajout alertes et offres */
 	
 	protected void ajouteOffre(Offre offre)
 	{
@@ -55,6 +37,8 @@ public class Enchere {
 	{
 			this.alertes.add(alerte);	
 	}
+
+	/* Création d'offre */
 	
 	public Offre CreeOffre(Utilisateur utilisateur, float prixO)
 	{
@@ -76,7 +60,7 @@ public class Enchere {
 			System.out.println("Vous ne pouvez pas emettre une offre à un prix inférieur au prix de l'enchere en question");
 			return null;
 		}
-		else if(this.utilisateur.getLogin().equals(this.getUtilisateur().getLogin()))
+		else if(this.utilisateur.equals(utilisateur))
 		{
 			System.out.println("Vous ne pouvez pas faire d'offres sur votre propre Enchere");
 			return null;
@@ -88,7 +72,7 @@ public class Enchere {
 		}
 	}
 	
-/* Configuration D'ALERTES */	
+	/* Configuration D'ALERTES */	
 /* Un Achteur peut configurer n'importe que alerte qui n'est pas la sienne biensur même s'il n'a pas emis des offres sur l'enchere en question*/
 
 	public void ConfigurationAlertePrixReserve(Utilisateur user, boolean prixRes)
@@ -204,6 +188,27 @@ public class Enchere {
 	
 /* Fin Configuration Alertes */
 	
+/* Getteres and Setters*/
+	
+	protected ArrayList<Alerte> getListeAlertes()
+	{
+		return this.alertes;
+	}
+	
+	protected ArrayList<Offre> getListeOffres()
+	{
+		return this.offres;
+	}
+	
+	protected float getPrixReserve()
+	{
+		return this.prixReserve;
+	}
+	
+	protected void setEtatEnchere(EtatEnchere etat)
+	{
+		this.etatEnchere = etat;
+	}
 	
 	public Objet getObjet()
 	{

@@ -80,30 +80,31 @@ public class Utilisateur {
 	
 	public void PublieEnchere(Enchere en)
 	{
-		if((!this.enchere.contains(en)) && (en != null))
+		if((this.equals(en.getUtilisateur())) && (en != null))
 		{
 			en.setEtatEnchere(EtatEnchere.Publiée);
 			ListeEnchereSingleton.getInstance().ajouteEnchere(en);
 		}
 		else
 		{
-			System.out.println("Vérifiez que l'enchere que vous voulez publiez existe bien");
+			System.out.println("Vérifiez que l'enchere que vous voulez publiez existe");
 		}
 		
 	}
 	
 	public void AnnuleEnchere(Enchere en)
 	{
-		if((!this.enchere.contains(en)) && (en != null))
+		if(this.equals(en.getUtilisateur()) && (en != null))
 		{
 			if(en.getListeOffres().get(en.getListeOffres().size() - 1).getPrixOffre() < en.getPrixReserve()) // On vérifie bien que le prix de reserve n'as pas été atteint
 			{
 				en.setEtatEnchere(EtatEnchere.Annulée);
+				Alerte.EnchereAnnulee(en);
 				ListeEnchereSingleton.getInstance().supprimeEnchere(en);
 			}
 			else
 			{
-				System.out.println("Vous ne pouvez pas annuler votre enchere, car le prix de reserve a été atteint");
+				System.out.println("Vous ne pouvez pas annuler votre enchere, car son prix de reserve a été atteint");
 			}
 		}
 		else

@@ -9,18 +9,22 @@ public class Main {
 		
 		Enchere en = toto.CreeEnchere("", "", 0, 12);
 		
-		en.CreeOffre(hajar, 12);
-		System.out.println(en.getListeAlertes().get(0).user.getLogin());
+		toto.PublieEnchere(en);
+		hajar.PublieEnchere(en);
+		en.CreeOffre(hajar, 5);
+		/*System.out.println(en.getListeAlertes().get(0).user.getLogin());
 		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
 		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
 		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
-		System.out.println(en.getListeAlertes().get(0).enchereTerminee);
+		System.out.println(en.getListeAlertes().get(0).enchereTerminee);*/
 		
+		en.CreeOffre(hajar, 11);
+		//en.ConfigurationAlerteEnchereAnnulee(hajar, false);
+		toto.AnnuleEnchere(en);
 		
-		en.CreeOffre(hajar, 14);
 		//en.ConfigurationAlertePrixReserve(hajar, false);
-		en.ConfigurationAlerteOffreSup(hajar, false);
-		en.CreeOffre(hajar, 15);
+		//en.ConfigurationAlerteOffreSup(hajar, false);
+		//en.CreeOffre(hajar, 15);
 		//en.ConfigurationAlertePrixReserve(toto, false);
 		
 		
