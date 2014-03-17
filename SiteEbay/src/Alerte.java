@@ -29,10 +29,12 @@ public class Alerte {
 					{
 						if(alerte.prixReserveAtteint == true)
 						{
-							if(o.getPrixOffre() < offre.getPrixOffre())
-								System.out.println("Alerte prix de reserve atteint par "+ o.getUtilisateur().getLogin());
+							if(o.getPrixOffre() != offre.getPrixOffre())
+								System.out.println("Alerte : prix de reserve atteint par "+ o.getUtilisateur().getLogin());
+							else if((o.getPrixOffre() == offre.getPrixOffre()) && (o.getUtilisateur().equals(offre.getUtilisateur())))
+								System.out.println("Alerte : Le prix de réserve a été atteint par votre offre");
 							else
-								System.out.println("Le prix d'offre a été atteint par votre offre");
+								System.out.println("Alerte : prix de reserve atteint par "+ o.getUtilisateur().getLogin());
 						}
 					}
 				}
@@ -40,7 +42,25 @@ public class Alerte {
 		}
 	}
 	
-		
+	public static void OffreSupérieure(Offre offre, Enchere en) // A modifier Alertes
+	{
+		for(Offre o : en.getListeOffres())
+		{
+			if(o.getPrixOffre() < offre.getPrixOffre())
+			{
+				for(Alerte alerte : en.getListeAlertes())
+				{
+					if(o.getUtilisateur().equals(alerte.user))
+					{
+						if(alerte.offreSuperieure == true)
+						{
+							System.out.println("Alerte : " + offre.getUtilisateur().getLogin() + " vient d'emettre une offre superieure à la votre");
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	
 }

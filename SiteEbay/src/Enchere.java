@@ -56,16 +56,6 @@ public class Enchere {
 			this.alertes.add(alerte);	
 	}
 	
-	
-	public void OffreSupérieure(Offre offre) // A modifier Alertes
-	{
-			for(Offre o : offres)
-			{
-				if(o.getPrixOffre() < offre.getPrixOffre())
-				System.out.println("Allerte Offre superieure par un autre utilisateur"+ o.getUtilisateur().getLogin());
-			}
-	}
-	
 	public Offre CreeOffre(Utilisateur utilisateur, float prixO)
 	{
 		if((!(this.utilisateur.equals(utilisateur.getLogin())) && (prixO >= this.getPrixMinimum())))
@@ -77,7 +67,7 @@ public class Enchere {
 			}
 			this.ajouteOffre(new Offre(utilisateur, prixO)); // On ajoute l'offre au tableau
 			Collections.sort(offres, new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
-			//this.OffreSupérieure(new Offre(utilisateur, prixO)); // On regarde si cette offre a le plus grand prix d'offre
+			Alerte.OffreSupérieure(new Offre(utilisateur, prixO), this); // On regarde si cette offre a le plus grand prix d'offre
 			Alerte.prixReserveAtteint(new Offre(utilisateur, prixO), this); // On regarde si le prix de reserve à été atteint par cette offre
 			return new Offre(utilisateur, prixO);
 		}

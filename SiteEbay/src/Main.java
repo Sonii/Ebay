@@ -18,7 +18,8 @@ public class Main {
 		
 		
 		en.CreeOffre(hajar, 14);
-		en.ConfigurationAlertePrixReserve(hajar, false);
+		//en.ConfigurationAlertePrixReserve(hajar, false);
+		en.ConfigurationAlerteOffreSup(hajar, false);
 		en.CreeOffre(hajar, 15);
 		//en.ConfigurationAlertePrixReserve(toto, false);
 		
