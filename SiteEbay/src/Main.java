@@ -17,29 +17,45 @@ public class Main {
 		toto.PublieEnchere(en);
 		/*System.out.println(ListeEnchereSingleton.getInstance().listeEnchere.get(0).getPrixMinimum());
 		System.out.println(ListeEnchereSingleton.getInstance().listeEnchere.get(1).getPrixMinimum());*/
-		en.CreeOffre(hajar, 11);
+		hajar.CreeOffre(en, 11);
+		hajar.CreeOffre(en, 40);
 		/*System.out.println(ListeEnchereSingleton.getInstance().listeEnchere.get(0).getPrixMinimum());
 		System.out.println(ListeEnchereSingleton.getInstance().listeEnchere.get(1).getPrixMinimum());*/
-		System.out.println(en.getListeOffres().get(0).getUtilisateur().getLogin());
+		/*System.out.println(en.getListeOffres().get(0).getUtilisateur().getLogin());
 		for(Enchere enchere : ListeEnchereSingleton.getInstance().getlisteEnchereVisible(hajar))
 		{
 			System.out.println(enchere.getPrixMinimum());
 		}
-		/*System.out.println(ListeEnchereSingleton.getInstance().getlisteEnchereVisible(hajar).get(0).getPrixMinimum());
-		System.out.println(ListeEnchereSingleton.getInstance().getlisteEnchereVisible(hajar).get(0).getPrixMinimum());*/
+		System.out.println(ListeEnchereSingleton.getInstance().getlisteEnchereVisible(hajar).get(0).getPrixMinimum());
+		System.out.println(ListeEnchereSingleton.getInstance().getlisteEnchereVisible(hajar).get(0).getPrixMinimum());
 		//ListeEnchereSingleton.getInstance().getlisteEnchereVisible(hajar);//=>ton echere hajar et l'enchere de toto parce a offre
 		//ListeEnchereSingleton.getInstance().getlisteEnchereVisible(toto);
 		/*toto.PublieEnchere(en);
-		hajar.PublieEnchere(en);
-		en.CreeOffre(hajar, 5);
-		/*System.out.println(en.getListeAlertes().get(0).user.getLogin());
+		hajar.PublieEnchere(en);*/
+		hajar.CreeOffre(en, 5);
 		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
 		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
 		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
-		System.out.println(en.getListeAlertes().get(0).enchereTerminee);*/
+		/*System.out.println(en.getListeAlertes().get(0).user.getLogin());*/
+		en.ConfigurationAlerteEnchereAnnulee(hajar, false);
+		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
+		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
+		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		en.ConfigurationAlerteOffreSup(hajar, false);
+		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
+		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
+		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		en.ConfigurationAlertePrixReserve(hajar, false);
+		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
+		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
+		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		
+		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
+		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
+		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
 		
 		/*en.CreeOffre(hajar, 11);
-		//en.ConfigurationAlerteEnchereAnnulee(hajar, false);
+		en.ConfigurationAlerteEnchereAnnulee(hajar, false);
 		toto.AnnuleEnchere(en);
 		en.CreeOffre(hajar, 11);
 		System.out.println(en.getPrixReserve(toto));

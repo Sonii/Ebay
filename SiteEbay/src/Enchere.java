@@ -28,48 +28,7 @@ public class Enchere {
 
 	/* Création d'offre */
 	
-	public Offre CreeOffre(Utilisateur utilisateur, float prixO)
-	{
-		if(this.etatEnchere == EtatEnchere.Publiée)
-		{
-			if((!(this.utilisateur.equals(utilisateur.getLogin())) && (prixO >= this.getPrixMinimum())))
-			{
-				Offre offre = new Offre(utilisateur, prixO);
-				System.out.println("Votre offre a bien été crée");
-				if(this.VerfierAlerteUtilisateur(utilisateur) == 0)
-				{
-					this.alertes.add(new Alerte(utilisateur, true,true,true));
-				}
-				//utilisateur.getListeEncheresVisibles().add(this); // On ajoute l'enchere à la liste des enchere visibles de l'achteur 
-				Alerte.AlerteVendeur(this.getUtilisateur(), offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
-				this.offres.add(offre); // On ajoute l'offre au tableau
-				Collections.sort(offres, new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
-				Alerte.OffreSupérieure(offre, this); // On regarde si cette offre a le plus grand prix d'offre
-				Alerte.prixReserveAtteint(offre, this); // On regarde si le prix de reserve à été atteint par cette offre
-				return offre;
-			}
-			else if(prixO < this.getPrixMinimum())
-			{
-				System.out.println("Vous ne pouvez pas emettre une offre à un prix inférieur au prix de l'enchere en question");
-				return null;
-			}
-			else if(this.utilisateur.equals(utilisateur))
-			{
-				System.out.println("Vous ne pouvez pas faire d'offres sur votre propre Enchere");
-				return null;
-			}
-			else
-			{
-				System.out.println("Une erreur s'est produite votre offre n'as pas été crée");
-				return null;
-			}
-		}
-		else
-		{
-			System.out.println("Cette offre a été annulée par son vendeur ou terminée");
-			return null;
-		}
-	}
+	
 	
 	/* Configuration D'ALERTES */	
 /* Un Achteur peut configurer n'importe que alerte qui n'est pas la sienne biensur même s'il n'a pas emis des offres sur l'enchere en question*/

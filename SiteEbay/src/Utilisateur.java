@@ -17,6 +17,48 @@ public class Utilisateur {
 		//this.encheresVisibles = new ArrayList<Enchere>();
 	}
 	
+	public Offre CreeOffre(Enchere en, float prixO)
+	{
+		if(en.getEtatEnchere() == EtatEnchere.Publiée)
+		{
+			if((!(en.equals(this.getLogin())) && (prixO >= en.getPrixMinimum())))
+			{
+				Offre offre = new Offre(this, prixO);
+				System.out.println("Votre offre a bien été crée");
+				if(en.VerfierAlerteUtilisateur(this) == 0)
+				{
+					en.getListeAlertes().add(new Alerte(this, true,true,true));
+				}
+				Alerte.AlerteVendeur(this, offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
+				en.getListeOffres().add(offre); // On ajoute l'offre au tableau
+				Collections.sort(en.getListeOffres(), new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
+				Alerte.OffreSupérieure(offre, en); // On regarde si cette offre a le plus grand prix d'offre
+				Alerte.prixReserveAtteint(offre, en); // On regarde si le prix de reserve à été atteint par cette offre
+				return offre;
+			}
+			else if(prixO < en.getPrixMinimum())
+			{
+				System.out.println("Vous ne pouvez pas emettre une offre à un prix inférieur au prix de l'enchere en question");
+				return null;
+			}
+			else if(en.getUtilisateur().equals(this))
+			{
+				System.out.println("Vous ne pouvez pas faire d'offres sur votre propre Enchere");
+				return null;
+			}
+			else
+			{
+				System.out.println("Une erreur s'est produite votre offre n'as pas été crée");
+				return null;
+			}
+		}
+		else
+		{
+			System.out.println("Cette offre a été annulée par son vendeur ou terminée");
+			return null;
+		}
+	}
+	
 	protected String getNom()
 	{
 		return this.nom;
