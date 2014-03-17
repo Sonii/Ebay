@@ -104,4 +104,8 @@ public class Alerte {
 		}
 	}
 	
+	public static void AlerteVendeur(Utilisateur user, Offre offre)
+	{
+		System.out.println("Alerte : Une nouvelle offre a été, emise sur votre enchere par " + offre.getUtilisateur().getLogin());
+	}
 }

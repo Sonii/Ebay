@@ -42,32 +42,41 @@ public class Enchere {
 	
 	public Offre CreeOffre(Utilisateur utilisateur, float prixO)
 	{
-		if((!(this.utilisateur.equals(utilisateur.getLogin())) && (prixO >= this.getPrixMinimum())))
+		if(this.etatEnchere != EtatEnchere.Annulée)
 		{
-			System.out.println("Votre offre a bien été crée");
-			if(this.VerfierAlerteUtilisateur(utilisateur) == 0)
+			if((!(this.utilisateur.equals(utilisateur.getLogin())) && (prixO >= this.getPrixMinimum())))
 			{
-				this.ajouteAlerte(new Alerte(utilisateur, true,true,true,true));
+				System.out.println("Votre offre a bien été crée");
+				if(this.VerfierAlerteUtilisateur(utilisateur) == 0)
+				{
+					this.ajouteAlerte(new Alerte(utilisateur, true,true,true,true));
+				}
+				Alerte.AlerteVendeur(this.getUtilisateur(), new Offre(utilisateur, prixO)); // A chaque fois qu'une offre est émise le vendeur est prévenu
+				this.ajouteOffre(new Offre(utilisateur, prixO)); // On ajoute l'offre au tableau
+				Collections.sort(offres, new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
+				Alerte.OffreSupérieure(new Offre(utilisateur, prixO), this); // On regarde si cette offre a le plus grand prix d'offre
+				Alerte.prixReserveAtteint(new Offre(utilisateur, prixO), this); // On regarde si le prix de reserve à été atteint par cette offre
+				return new Offre(utilisateur, prixO);
 			}
-			this.ajouteOffre(new Offre(utilisateur, prixO)); // On ajoute l'offre au tableau
-			Collections.sort(offres, new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
-			Alerte.OffreSupérieure(new Offre(utilisateur, prixO), this); // On regarde si cette offre a le plus grand prix d'offre
-			Alerte.prixReserveAtteint(new Offre(utilisateur, prixO), this); // On regarde si le prix de reserve à été atteint par cette offre
-			return new Offre(utilisateur, prixO);
-		}
-		else if(prixO < this.getPrixMinimum())
-		{
-			System.out.println("Vous ne pouvez pas emettre une offre à un prix inférieur au prix de l'enchere en question");
-			return null;
-		}
-		else if(this.utilisateur.equals(utilisateur))
-		{
-			System.out.println("Vous ne pouvez pas faire d'offres sur votre propre Enchere");
-			return null;
+			else if(prixO < this.getPrixMinimum())
+			{
+				System.out.println("Vous ne pouvez pas emettre une offre à un prix inférieur au prix de l'enchere en question");
+				return null;
+			}
+			else if(this.utilisateur.equals(utilisateur))
+			{
+				System.out.println("Vous ne pouvez pas faire d'offres sur votre propre Enchere");
+				return null;
+			}
+			else
+			{
+				System.out.println("Une erreur s'est produite votre offre n'as pas été crée");
+				return null;
+			}
 		}
 		else
 		{
-			System.out.println("Une erreur s'est produite votre offre n'as pas été crée");
+			System.out.println("Cette offre a été annulée par son vendeur");
 			return null;
 		}
 	}

@@ -60,11 +60,13 @@ public class Utilisateur {
 	protected void seConnecte()
 	{
 		this.setModeConnexion(ModeConnexion.Connecté);
+		ListeUtilisateurConnecteSingleton.getInstance().ajouteUtilisateur(this);
 	}
 	
 	protected void seDeconnecte()
 	{
 		this.setModeConnexion(ModeConnexion.Deconnecté);
+		ListeUtilisateurConnecteSingleton.getInstance().supprimeUtilisateur(this);
 	}
 	
 	public Enchere CreeEnchere(String description, String identifiant, float prixMin, float prixReserve)
@@ -100,7 +102,6 @@ public class Utilisateur {
 			{
 				en.setEtatEnchere(EtatEnchere.Annulée);
 				Alerte.EnchereAnnulee(en);
-				ListeEnchereSingleton.getInstance().supprimeEnchere(en);
 			}
 			else
 			{
