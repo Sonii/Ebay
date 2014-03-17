@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Utilisateur {
+public class Utilisateur implements Achteur, Vendeur{
 
 	private String login = "";
 	private String prenom = "";
@@ -102,7 +102,7 @@ public class Utilisateur {
 		}
 	}
 	
-	protected ArrayList<Enchere> getListeEncheresVisibles()
+	public ArrayList<Enchere> getListeEncheresVisibles()
 	{
 		return this.encheresVisibles;
 	}
