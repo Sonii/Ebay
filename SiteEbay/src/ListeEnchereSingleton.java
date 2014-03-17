@@ -4,7 +4,8 @@ import java.util.*;
 public class ListeEnchereSingleton {
 
 	private static ListeEnchereSingleton uniqueInstance;
-	private ArrayList<Enchere> listeEnchere;
+	public ArrayList<Enchere> listeEnchere;
+
 	
 	private ListeEnchereSingleton()
 	{
@@ -25,9 +26,32 @@ public class ListeEnchereSingleton {
            this.listeEnchere.add(en);
     }
 	
-	public ArrayList<Enchere> VoirelisteEnchere()
+	public ArrayList<Enchere> getlisteEnchereVisible(Utilisateur user)
 	{
-		return this.listeEnchere;
+		ArrayList<Enchere> listeEnchereVisible = new ArrayList<Enchere>();
+		for(Enchere enchere : this.listeEnchere)
+		{
+			if(enchere.getUtilisateur().equals(user))
+			{
+				listeEnchereVisible.add(enchere);
+			}
+			else if(enchere.getEtatEnchere() == EtatEnchere.Publiée)
+			{
+				listeEnchereVisible.add(enchere);
+			}
+			else 
+			{
+				for(Offre offre : enchere.getListeOffres())
+				{
+					if(offre.getUtilisateur().equals(user))
+					{
+						listeEnchereVisible.add(enchere);
+						break;
+					}
+				}
+			}
+		}
+		return listeEnchereVisible;
 	}
 	
 	public void supprimeEnchere(Enchere en)

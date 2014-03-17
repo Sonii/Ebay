@@ -4,16 +4,14 @@ public class Alerte {
 	protected  boolean prixReserveAtteint;
 	protected  boolean offreSuperieure;
 	protected  boolean enchereAnnulee;
-	protected  boolean enchereTerminee;
 	protected Utilisateur user;
 	
-	public Alerte(Utilisateur user, boolean prixR, boolean offreS, boolean enchereA, boolean enchereT)
+	public Alerte(Utilisateur user, boolean prixR, boolean offreS, boolean enchereA)
 	{
 		this.user = user;
 		this.prixReserveAtteint = prixR;
 		this.offreSuperieure = offreS;
 		this.enchereAnnulee = enchereA;
-		this.enchereTerminee = enchereT;
 	}
 	
 	public static void prixReserveAtteint(Offre offre, Enchere en) // A modifier Alertes
@@ -84,19 +82,9 @@ public class Alerte {
 		int i = 0;
 		for(Offre o : en.getListeOffres())
 		{
-			while(i < en.getListeAlertes().size() - 1)
+			while(i < en.getListeOffres().size() - 1)
 			{
-				for(Alerte alerte : en.getListeAlertes())
-				{
-					if(o.getUtilisateur().equals(alerte.user))
-					{
-						if(alerte.enchereTerminee == true)
-						{
-							System.out.println("Alerte : l'enchere " + en.getObjet().getIdentifiant() + " vient d'être vendue à un autre achteur");
-						}
-					}
-				}
-				
+				System.out.println("Alerte : l'enchere " + en.getObjet().getIdentifiant() + " vient d'être vendue à un autre achteur");
 				i++;
 			}
 			if(o.equals(en.getListeOffres().get(en.getListeOffres().size() - 1)))

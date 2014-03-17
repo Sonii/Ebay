@@ -1,22 +1,20 @@
 import java.util.*;
 
 
-public class Utilisateur implements Achteur, Vendeur{
+public class Utilisateur {
 
 	private String login = "";
 	private String prenom = "";
 	private String nom = "";
 	private ModeConnexion modeConnexion;
-	private ArrayList<Enchere> enchere;
-	private ArrayList<Enchere> encheresVisibles;
-	
+
 	public Utilisateur(String login, String prenom, String nom)
 	{
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.enchere = new ArrayList<Enchere>();
-		this.encheresVisibles = new ArrayList<Enchere>();
+		//this.enchere = new ArrayList<Enchere>();
+		//this.encheresVisibles = new ArrayList<Enchere>();
 	}
 	
 	protected String getNom()
@@ -58,13 +56,9 @@ public class Utilisateur implements Achteur, Vendeur{
 	
 	public Enchere CreeEnchere(String description, String identifiant, float prixMin, float prixReserve)
 	{
-			enchere.add(new Enchere(description, identifiant, prixMin, prixReserve, this));
-			return new Enchere(description, identifiant, prixMin, prixReserve, this);
-	}
-	
-	protected ArrayList<Enchere> getMesEncheres()
-	{
-		return this.enchere;
+			Enchere enchere = new Enchere(description, identifiant, prixMin, prixReserve, this);
+			ListeEnchereSingleton.getInstance().ajouteEnchere(enchere);
+			return enchere;
 	}
 	
 	public void PublieEnchere(Enchere en)
@@ -72,7 +66,6 @@ public class Utilisateur implements Achteur, Vendeur{
 		if((this.equals(en.getUtilisateur())) && (en != null))
 		{
 			en.setEtatEnchere(EtatEnchere.Publiée);
-			ListeEnchereSingleton.getInstance().ajouteEnchere(en);
 		}
 		else
 		{
@@ -89,7 +82,6 @@ public class Utilisateur implements Achteur, Vendeur{
 			{
 				en.setEtatEnchere(EtatEnchere.Annulée);
 				Alerte.EnchereAnnulee(en);
-				ListeEnchereSingleton.getInstance().supprimeEnchere(en);
 			}
 			else
 			{
@@ -102,10 +94,10 @@ public class Utilisateur implements Achteur, Vendeur{
 		}
 	}
 	
-	public ArrayList<Enchere> getListeEncheresVisibles()
+	/*public ArrayList<Enchere> getListeEncheresVisibles()
 	{
 		return this.encheresVisibles;
-	}
+	}*/
 	
 	
 }

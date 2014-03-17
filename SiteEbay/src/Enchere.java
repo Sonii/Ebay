@@ -25,18 +25,6 @@ public class Enchere {
 		this.dateCreation = new Date();
 		this.dateExpiration = new Date(dateCreation.getTime() + new Date(2000).getTime());
 	}
-	
-	/*Ajout alertes et offres */
-	
-	protected void ajouteOffre(Offre offre)
-	{
-			this.offres.add(offre);	
-	}
-	
-	protected void ajouteAlerte(Alerte alerte)
-	{
-			this.alertes.add(alerte);	
-	}
 
 	/* Création d'offre */
 	
@@ -46,18 +34,19 @@ public class Enchere {
 		{
 			if((!(this.utilisateur.equals(utilisateur.getLogin())) && (prixO >= this.getPrixMinimum())))
 			{
+				Offre offre = new Offre(utilisateur, prixO);
 				System.out.println("Votre offre a bien été crée");
 				if(this.VerfierAlerteUtilisateur(utilisateur) == 0)
 				{
-					this.ajouteAlerte(new Alerte(utilisateur, true,true,true,true));
+					this.alertes.add(new Alerte(utilisateur, true,true,true));
 				}
-				utilisateur.getListeEncheresVisibles().add(this); // On ajoute l'enchere à la liste des enchere visibles de l'achteur 
-				Alerte.AlerteVendeur(this.getUtilisateur(), new Offre(utilisateur, prixO)); // A chaque fois qu'une offre est émise le vendeur est prévenu
-				this.ajouteOffre(new Offre(utilisateur, prixO)); // On ajoute l'offre au tableau
+				//utilisateur.getListeEncheresVisibles().add(this); // On ajoute l'enchere à la liste des enchere visibles de l'achteur 
+				Alerte.AlerteVendeur(this.getUtilisateur(), offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
+				this.offres.add(offre); // On ajoute l'offre au tableau
 				Collections.sort(offres, new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
-				Alerte.OffreSupérieure(new Offre(utilisateur, prixO), this); // On regarde si cette offre a le plus grand prix d'offre
-				Alerte.prixReserveAtteint(new Offre(utilisateur, prixO), this); // On regarde si le prix de reserve à été atteint par cette offre
-				return new Offre(utilisateur, prixO);
+				Alerte.OffreSupérieure(offre, this); // On regarde si cette offre a le plus grand prix d'offre
+				Alerte.prixReserveAtteint(offre, this); // On regarde si le prix de reserve à été atteint par cette offre
+				return offre;
 			}
 			else if(prixO < this.getPrixMinimum())
 			{
@@ -101,7 +90,7 @@ public class Enchere {
 			}
 			if(i == 0)
 			{
-				this.alertes.add(new Alerte(user, prixRes, true, true, true));
+				this.alertes.add(new Alerte(user, prixRes, true, true));
 			}
 		}
 		else
@@ -127,7 +116,7 @@ public class Enchere {
 			}
 			if(i == 0)
 			{
-				this.alertes.add(new Alerte(user, true, prixRes, true, true));
+				this.alertes.add(new Alerte(user, true, prixRes, true));
 			}
 		}
 		else
@@ -152,7 +141,7 @@ public class Enchere {
 			}
 			if(i == 0)
 			{
-				this.alertes.add(new Alerte(user, true, true, prixRes, true));
+				this.alertes.add(new Alerte(user, true, true, prixRes));
 			}
 		}
 		else
@@ -160,32 +149,7 @@ public class Enchere {
 			System.out.println("Vous ne pouvez pas configurer des alertes sur votre propre enchere");
 		}
 	}
-	
-	public void ConfigurationAlerteEnchereTerminee(Utilisateur user, boolean prixRes)
-	{
-		int i = 0;
-		if(!this.getUtilisateur().equals(user))
-		{
-			for(Alerte alerte : this.alertes)
-			{
-				if(alerte.user.equals(user))
-				{
-					alerte.enchereTerminee = prixRes;
-					i = 1;
-					return;
-				}
-			}
-			if(i == 0)
-			{
-				this.alertes.add(new Alerte(user, true, true, true, prixRes));
-			}
-		}
-		else
-		{
-			System.out.println("Vous ne pouvez pas configurer des alertes sur votre propre enchere");
-		}
-	}
-	
+		
 	public int VerfierAlerteUtilisateur(Utilisateur u)
 	{
 		for(Alerte alerte : this.alertes)
