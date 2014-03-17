@@ -37,15 +37,15 @@ public class Main {
 		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
 		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
 		/*System.out.println(en.getListeAlertes().get(0).user.getLogin());*/
-		en.ConfigurationAlerteEnchereAnnulee(hajar, false);
+		hajar.ConfigurationAlerteEnchereAnnulee(en, false);
 		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
 		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
 		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
-		en.ConfigurationAlerteOffreSup(hajar, false);
+		hajar.ConfigurationAlerteOffreSup(en, false);
 		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
 		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
 		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
-		en.ConfigurationAlertePrixReserve(hajar, false);
+		hajar.ConfigurationAlertePrixReserve(en, false);
 		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
 		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
 		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);

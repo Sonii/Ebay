@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Utilisateur {
+public class Utilisateur implements Achteur, Vendeur{
 
 	private String login = "";
 	private String prenom = "";
@@ -25,7 +25,7 @@ public class Utilisateur {
 			{
 				Offre offre = new Offre(this, prixO);
 				System.out.println("Votre offre a bien été crée");
-				if(en.VerfierAlerteUtilisateur(this) == 0)
+				if(this.VerfierAlerteUtilisateur(en) == 0)
 				{
 					en.getListeAlertes().add(new Alerte(this, true,true,true));
 				}
@@ -58,6 +58,98 @@ public class Utilisateur {
 			return null;
 		}
 	}
+	
+	/* Configuration D'ALERTES */	
+/* Un Achteur peut configurer n'importe que alerte qui n'est pas la sienne biensur même s'il n'a pas emis des offres sur l'enchere en question*/
+
+	public void ConfigurationAlertePrixReserve(Enchere en, boolean prixRes)
+	{
+		int i = 0;
+		if(!en.getUtilisateur().equals(this))
+		{
+			for(Alerte alerte : en.getListeAlertes())
+			{
+				if(alerte.user.equals(this))
+				{
+					alerte.prixReserveAtteint = prixRes;
+					i = 1;
+					return;
+				}
+			}
+			if(i == 0)
+			{
+				en.getListeAlertes().add(new Alerte(this, prixRes, true, true));
+			}
+		}
+		else
+		{
+			System.out.println("Vous ne pouvez pas configurer des alertes sur votre propre enchere");
+		}
+	}
+	
+	public void ConfigurationAlerteOffreSup(Enchere en, boolean prixRes)
+	{
+		int i = 0;
+		
+		if(!en.getUtilisateur().equals(this))
+		{
+			for(Alerte alerte : en.getListeAlertes())
+			{
+				if(alerte.user.equals(this))
+				{
+					alerte.offreSuperieure = prixRes;
+					i = 1;
+					return;
+				}
+			}
+			if(i == 0)
+			{
+				en.getListeAlertes().add(new Alerte(this, true, prixRes, true));
+			}
+		}
+		else
+		{
+			System.out.println("Vous ne pouvez pas configurer des alertes sur votre propre enchere");
+		}
+	}
+	
+	public void ConfigurationAlerteEnchereAnnulee(Enchere en, boolean prixRes)
+	{
+		int i = 0;
+		if(!en.getUtilisateur().equals(this))
+		{
+			for(Alerte alerte : en.getListeAlertes())
+			{
+				if(alerte.user.equals(this))
+				{
+					alerte.enchereAnnulee = prixRes;
+					i = 1;
+					return;
+				}
+			}
+			if(i == 0)
+			{
+				en.getListeAlertes().add(new Alerte(this, true, true, prixRes));
+			}
+		}
+		else
+		{
+			System.out.println("Vous ne pouvez pas configurer des alertes sur votre propre enchere");
+		}
+	}
+		
+	public int VerfierAlerteUtilisateur(Enchere en)
+	{
+		for(Alerte alerte : en.getListeAlertes())
+		{
+			if(alerte.user.equals(this))
+				return 1;
+		}
+		return 0;
+	}
+	
+/* Fin Configuration Alertes */
+	
 	
 	protected String getNom()
 	{
