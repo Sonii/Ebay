@@ -1,11 +1,15 @@
 import java.util.*;
 
+import Enchere.Enchere;
+import Utilisateur.Utilisateur;
+
 public class Main {
 
 	public static void main(String[] args) {
 		
 		Utilisateur toto = new Utilisateur("toto", "Thomas", "Remond");
 		Utilisateur hajar = new Utilisateur("Hajar", "Hajar", "Malil");
+
 		Enchere en2 = toto.CreeEnchere("", "", 5, 8);
 		Enchere en3 = toto.CreeEnchere("", "", 6, 8);
 		toto.PublieEnchere(en2);
@@ -33,26 +37,26 @@ public class Main {
 		/*toto.PublieEnchere(en);
 		hajar.PublieEnchere(en);*/
 		hajar.CreeOffre(en, 5);
-		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
-		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
-		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		System.out.println(en.getListeAlertes().get(0).isPrixReserveAtteint());
+		System.out.println(en.getListeAlertes().get(0).isOffreSuperieure());
+		System.out.println(en.getListeAlertes().get(0).isEnchereAnnulee());
 		/*System.out.println(en.getListeAlertes().get(0).user.getLogin());*/
 		hajar.ConfigurationAlerteEnchereAnnulee(en, false);
-		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
-		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
-		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		System.out.println(en.getListeAlertes().get(0).isPrixReserveAtteint());
+		System.out.println(en.getListeAlertes().get(0).isOffreSuperieure());
+		System.out.println(en.getListeAlertes().get(0).isEnchereAnnulee());
 		hajar.ConfigurationAlerteOffreSup(en, false);
-		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
-		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
-		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		System.out.println(en.getListeAlertes().get(0).isPrixReserveAtteint());
+		System.out.println(en.getListeAlertes().get(0).isOffreSuperieure());
+		System.out.println(en.getListeAlertes().get(0).isEnchereAnnulee());
 		hajar.ConfigurationAlertePrixReserve(en, false);
-		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
-		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
-		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		System.out.println(en.getListeAlertes().get(0).isPrixReserveAtteint());
+		System.out.println(en.getListeAlertes().get(0).isOffreSuperieure());
+		System.out.println(en.getListeAlertes().get(0).isEnchereAnnulee());
 		
-		System.out.println(en.getListeAlertes().get(0).prixReserveAtteint);
-		System.out.println(en.getListeAlertes().get(0).offreSuperieure);
-		System.out.println(en.getListeAlertes().get(0).enchereAnnulee);
+		System.out.println(en.getListeAlertes().get(0).isPrixReserveAtteint());
+		System.out.println(en.getListeAlertes().get(0).isOffreSuperieure());
+		System.out.println(en.getListeAlertes().get(0).isEnchereAnnulee());
 		
 		/*en.CreeOffre(hajar, 11);
 		en.ConfigurationAlerteEnchereAnnulee(hajar, false);

@@ -1,7 +1,17 @@
+package Utilisateur;
 import java.util.*;
 
+import Enchere.Alerte;
+import Enchere.Enchere;
+import Enchere.EtatEnchere;
+import Enchere.Offre;
+import Enchere.OffreComparator;
+import Systeme.ListeEnchereSingleton;
+import Systeme.ListeUtilisateurConnecteSingleton;
+import Systeme.ModeConnexion;
 
-public class Utilisateur implements Achteur, Vendeur{
+
+public class Utilisateur implements Acheteur, Vendeur{
 
 	private String login = "";
 	private String prenom = "";
@@ -69,9 +79,9 @@ public class Utilisateur implements Achteur, Vendeur{
 		{
 			for(Alerte alerte : en.getListeAlertes())
 			{
-				if(alerte.user.equals(this))
+				if(alerte.getUser().equals(this))
 				{
-					alerte.prixReserveAtteint = prixRes;
+					alerte.setPrixReserveAtteint(prixRes);
 					i = 1;
 					return;
 				}
@@ -95,9 +105,9 @@ public class Utilisateur implements Achteur, Vendeur{
 		{
 			for(Alerte alerte : en.getListeAlertes())
 			{
-				if(alerte.user.equals(this))
+				if(alerte.getUser().equals(this))
 				{
-					alerte.offreSuperieure = prixRes;
+					alerte.setOffreSuperieure(prixRes);
 					i = 1;
 					return;
 				}
@@ -120,9 +130,9 @@ public class Utilisateur implements Achteur, Vendeur{
 		{
 			for(Alerte alerte : en.getListeAlertes())
 			{
-				if(alerte.user.equals(this))
+				if(alerte.getUser().equals(this))
 				{
-					alerte.enchereAnnulee = prixRes;
+					alerte.setEnchereAnnulee(prixRes);
 					i = 1;
 					return;
 				}
@@ -142,7 +152,7 @@ public class Utilisateur implements Achteur, Vendeur{
 	{
 		for(Alerte alerte : en.getListeAlertes())
 		{
-			if(alerte.user.equals(this))
+			if(alerte.getUser().equals(this))
 				return 1;
 		}
 		return 0;
@@ -161,7 +171,7 @@ public class Utilisateur implements Achteur, Vendeur{
 		return this.prenom;
 	}
 	
-	protected String getLogin()
+	public String getLogin()
 	{
 		return this.login;
 	}
@@ -190,7 +200,7 @@ public class Utilisateur implements Achteur, Vendeur{
 	
 	public Enchere CreeEnchere(String description, String identifiant, float prixMin, float prixReserve)
 	{
-			Enchere enchere = new Enchere(description, identifiant, prixMin, prixReserve, this);
+			Enchere enchere = new Enchere(description, identifiant, prixMin, prixReserve, this);//TOTO passer un parametre de temps peut-etre ?
 			ListeEnchereSingleton.getInstance().ajouteEnchere(enchere);
 			return enchere;
 	}

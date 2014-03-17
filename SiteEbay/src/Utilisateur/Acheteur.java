@@ -1,7 +1,9 @@
-import java.util.ArrayList;
+package Utilisateur;
+import Enchere.Enchere;
+import Enchere.Offre;
 
 
-public interface Achteur {
+public interface Acheteur {
 
 	public Offre CreeOffre(Enchere en, float prixO);
 	public void ConfigurationAlertePrixReserve(Enchere en, boolean prixRes);

@@ -1,17 +1,20 @@
+package Enchere;
+import Utilisateur.Utilisateur;
+
 
 public class Alerte {
 
-	protected  boolean prixReserveAtteint;
-	protected  boolean offreSuperieure;
-	protected  boolean enchereAnnulee;
-	protected Utilisateur user;
+	private  boolean prixReserveAtteint;
+	private  boolean offreSuperieure;
+	private  boolean enchereAnnulee;
+	private Utilisateur user;
 	
 	public Alerte(Utilisateur user, boolean prixR, boolean offreS, boolean enchereA)
 	{
-		this.user = user;
-		this.prixReserveAtteint = prixR;
-		this.offreSuperieure = offreS;
-		this.enchereAnnulee = enchereA;
+		this.setUser(user);
+		this.setPrixReserveAtteint(prixR);
+		this.setOffreSuperieure(offreS);
+		this.setEnchereAnnulee(enchereA);
 	}
 	
 	public static void prixReserveAtteint(Offre offre, Enchere en) // A modifier Alertes
@@ -23,9 +26,9 @@ public class Alerte {
 			{
 				for(Alerte alerte : en.getListeAlertes())
 				{
-					if(o.getUtilisateur().equals(alerte.user))
+					if(o.getUtilisateur().equals(alerte.getUser()))
 					{
-						if(alerte.prixReserveAtteint == true)
+						if(alerte.isPrixReserveAtteint() == true)
 						{
 							if(o.getPrixOffre() != offre.getPrixOffre())
 								System.out.println("Alerte : prix de reserve atteint par "+ o.getUtilisateur().getLogin());
@@ -48,9 +51,9 @@ public class Alerte {
 			{
 				for(Alerte alerte : en.getListeAlertes())
 				{
-					if(o.getUtilisateur().equals(alerte.user))
+					if(o.getUtilisateur().equals(alerte.getUser()))
 					{
-						if(alerte.offreSuperieure == true)
+						if(alerte.isOffreSuperieure() == true)
 						{
 							System.out.println("Alerte : " + offre.getUtilisateur().getLogin() + " vient d'emettre une offre superieure à la votre");
 						}
@@ -66,9 +69,9 @@ public class Alerte {
 		{
 			for(Alerte alerte : en.getListeAlertes())
 			{
-				if(o.getUtilisateur().equals(alerte.user))
+				if(o.getUtilisateur().equals(alerte.getUser()))
 				{
-					if(alerte.enchereAnnulee == true)
+					if(alerte.isEnchereAnnulee() == true)
 					{
 						System.out.println("Alerte : l'enchere " + en.getObjet().getIdentifiant() + " vient d'être annulée par son vendeur");
 					}
@@ -95,5 +98,43 @@ public class Alerte {
 	public static void AlerteVendeur(Utilisateur user, Offre offre)
 	{
 		System.out.println("Alerte : Une nouvelle offre a été, emise sur votre enchere par " + offre.getUtilisateur().getLogin());
+	}
+
+	public Utilisateur getUser() {
+		return user;
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
+	}
+
+	public boolean isOffreSuperieure() {
+		return offreSuperieure;
+	}
+
+	public void setOffreSuperieure(boolean offreSuperieure) {
+		this.offreSuperieure = offreSuperieure;
+	}
+
+	public boolean isEnchereAnnulee() {
+		return enchereAnnulee;
+	}
+
+	public void setEnchereAnnulee(boolean enchereAnnulee) {
+		this.enchereAnnulee = enchereAnnulee;
+	}
+
+	/**
+	 * @return the prixReserveAtteint
+	 */
+	public boolean isPrixReserveAtteint() {
+		return prixReserveAtteint;
+	}
+
+	/**
+	 * @param prixReserveAtteint the prixReserveAtteint to set
+	 */
+	public void setPrixReserveAtteint(boolean prixReserveAtteint) {
+		this.prixReserveAtteint = prixReserveAtteint;
 	}
 }

@@ -1,3 +1,4 @@
+package Enchere;
 
 public enum EtatEnchere {
 

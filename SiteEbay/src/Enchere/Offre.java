@@ -1,3 +1,6 @@
+package Enchere;
+import Utilisateur.Utilisateur;
+
 
 public class Offre {
 

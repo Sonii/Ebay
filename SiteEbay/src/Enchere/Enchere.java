@@ -1,4 +1,8 @@
+package Enchere;
 import java.util.*;
+
+import Systeme.HorlogeSingleton;
+import Utilisateur.Utilisateur;
 
 
 public class Enchere {
@@ -12,6 +16,7 @@ public class Enchere {
 	private Date dateExpiration;
 	private Utilisateur utilisateur;
 	private EtatEnchere etatEnchere;
+	private Timer timer;
 	
 	public Enchere(String description, String identifiant, float prixMin, float prixReserve, Utilisateur user)
 	{
@@ -22,24 +27,26 @@ public class Enchere {
 		this.prixReserve = prixReserve;
 		this.utilisateur = user;
 		this.etatEnchere = EtatEnchere.Crée;
-		this.dateCreation = new Date();
-		this.dateExpiration = new Date(dateCreation.getTime() + new Date(2000).getTime());
+		this.dateCreation = HorlogeSingleton.getInstance().getTemps();
+		this.dateExpiration = new Date(dateCreation.getTime() + new Date(1000*60*60*2).getTime());
+		this.timer=new Timer();  //At this line a new Thread will be created
+        timer.schedule(new Verification(this, dateExpiration), 0, 1);
 	}
 	
 
 /* Getteres and Setters*/
 	
-	protected ArrayList<Alerte> getListeAlertes()
+	public ArrayList<Alerte> getListeAlertes()
 	{
 		return this.alertes;
 	}
 	
-	protected ArrayList<Offre> getListeOffres()
+	public ArrayList<Offre> getListeOffres()
 	{
 		return this.offres;
 	}
 	
-	protected Float getPrixReserve(Utilisateur user)
+	public Float getPrixReserve(Utilisateur user)
 	{
 		if(this.utilisateur.equals(user))
 		{
@@ -52,7 +59,7 @@ public class Enchere {
 		}
 	}
 	
-	protected void setEtatEnchere(EtatEnchere etat)
+	public void setEtatEnchere(EtatEnchere etat)
 	{
 		this.etatEnchere = etat;
 	}

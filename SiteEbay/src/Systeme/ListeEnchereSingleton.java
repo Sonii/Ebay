@@ -1,4 +1,10 @@
+package Systeme;
 import java.util.*;
+
+import Enchere.Enchere;
+import Enchere.EtatEnchere;
+import Enchere.Offre;
+import Utilisateur.Utilisateur;
 
 
 public class ListeEnchereSingleton {

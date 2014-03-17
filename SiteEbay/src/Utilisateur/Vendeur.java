@@ -1,3 +1,6 @@
+package Utilisateur;
+import Enchere.Enchere;
+
 
 public interface Vendeur {
 	
