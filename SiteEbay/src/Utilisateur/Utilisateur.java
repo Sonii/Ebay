@@ -1,14 +1,14 @@
 package Utilisateur;
 import java.util.*;
 
-import Enchere.Alerte;
+import Enchere.AlerteAbonnement;
 import Enchere.Enchere;
 import Enchere.EtatEnchere;
 import Enchere.Offre;
 import Enchere.OffreComparator;
+import Systeme.Alerte;
 import Systeme.ListeEnchereSingleton;
-import Systeme.ListeUtilisateurConnecteSingleton;
-import Systeme.ModeConnexion;
+import Systeme.ListeUtilisateurSingleton;
 
 
 public class Utilisateur implements Acheteur, Vendeur{
@@ -23,26 +23,31 @@ public class Utilisateur implements Acheteur, Vendeur{
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
-		//this.enchere = new ArrayList<Enchere>();
-		//this.encheresVisibles = new ArrayList<Enchere>();
+		ListeUtilisateurSingleton.getInstance().ajouteUtilisateur(this);
+		
 	}
+
 	
-	public Offre CreeOffre(Enchere en, float prixO)
+	public Offre deposerOffre(Enchere en, float prixO)
 	{
+		if (en == null){
+			System.out.println("Cette enchère n'existe pas");
+			return null ;
+		}
+		
 		if(en.getEtatEnchere() == EtatEnchere.Publiée)
 		{
-			if((!(en.equals(this.getLogin())) && (prixO >= en.getPrixMinimum())))
+			if((!(en.getVendeur().equals(this)) && (prixO >= en.getPrixMinimum())))
 			{
 				Offre offre = new Offre(this, prixO);
-				System.out.println("Votre offre a bien été crée");
-				if(this.VerfierAlerteUtilisateur(en) == 0)
+				if(this.verfierAlerteUtilisateur(en) == 0)
 				{
-					en.getListeAlertes().add(new Alerte(this, true,true,true));
+					en.getListeAlertes().add(new AlerteAbonnement(this, true,true,true));
 				}
-				Alerte.AlerteVendeur(this, offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
+				Alerte.alerteVendeur(this, offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
 				en.getListeOffres().add(offre); // On ajoute l'offre au tableau
 				Collections.sort(en.getListeOffres(), new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
-				Alerte.OffreSupérieure(offre, en); // On regarde si cette offre a le plus grand prix d'offre
+				Alerte.offreSuperieure(offre, en); // On regarde si cette offre a le plus grand prix d'offre
 				Alerte.prixReserveAtteint(offre, en); // On regarde si le prix de reserve à été atteint par cette offre
 				return offre;
 			}
@@ -51,7 +56,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 				System.out.println("Vous ne pouvez pas emettre une offre à un prix inférieur au prix de l'enchere en question");
 				return null;
 			}
-			else if(en.getUtilisateur().equals(this))
+			else if(en.getVendeur().equals(this))
 			{
 				System.out.println("Vous ne pouvez pas faire d'offres sur votre propre Enchere");
 				return null;
@@ -64,7 +69,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 		}
 		else
 		{
-			System.out.println("Cette offre a été annulée par son vendeur ou terminée");
+			System.out.println("Cette offre a été annulée par son vendeur ou terminée ou n'est pas ecnore publier");
 			return null;
 		}
 	}
@@ -72,14 +77,15 @@ public class Utilisateur implements Acheteur, Vendeur{
 	/* Configuration D'ALERTES */	
 /* Un Achteur peut configurer n'importe que alerte qui n'est pas la sienne biensur même s'il n'a pas emis des offres sur l'enchere en question*/
 
-	public void ConfigurationAlertePrixReserve(Enchere en, boolean prixRes)
+
+	private void configurerAlertePrixReserve(Enchere en, boolean prixRes)
 	{
 		int i = 0;
-		if(!en.getUtilisateur().equals(this))
+		if(!en.getVendeur().equals(this))
 		{
-			for(Alerte alerte : en.getListeAlertes())
+			for(AlerteAbonnement alerte : en.getListeAlertes())
 			{
-				if(alerte.getUser().equals(this))
+				if(alerte.getAcheteur().equals(this))
 				{
 					alerte.setPrixReserveAtteint(prixRes);
 					i = 1;
@@ -88,7 +94,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 			}
 			if(i == 0)
 			{
-				en.getListeAlertes().add(new Alerte(this, prixRes, true, true));
+				en.getListeAlertes().add(new AlerteAbonnement(this, prixRes, true, true));
 			}
 		}
 		else
@@ -97,15 +103,15 @@ public class Utilisateur implements Acheteur, Vendeur{
 		}
 	}
 	
-	public void ConfigurationAlerteOffreSup(Enchere en, boolean prixRes)
+	private void configurerAlerteOffreSup(Enchere en, boolean prixRes)
 	{
 		int i = 0;
 		
-		if(!en.getUtilisateur().equals(this))
+		if(!en.getVendeur().equals(this))
 		{
-			for(Alerte alerte : en.getListeAlertes())
+			for(AlerteAbonnement alerte : en.getListeAlertes())
 			{
-				if(alerte.getUser().equals(this))
+				if(alerte.getAcheteur().equals(this))
 				{
 					alerte.setOffreSuperieure(prixRes);
 					i = 1;
@@ -114,7 +120,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 			}
 			if(i == 0)
 			{
-				en.getListeAlertes().add(new Alerte(this, true, prixRes, true));
+				en.getListeAlertes().add(new AlerteAbonnement(this, true, prixRes, true));
 			}
 		}
 		else
@@ -123,23 +129,23 @@ public class Utilisateur implements Acheteur, Vendeur{
 		}
 	}
 	
-	public void ConfigurationAlerteEnchereAnnulee(Enchere en, boolean prixRes)
+	private void configurerAlerteEnchereAnnulee(Enchere en, boolean annulation)
 	{
 		int i = 0;
-		if(!en.getUtilisateur().equals(this))
+		if(!en.getVendeur().equals(this))
 		{
-			for(Alerte alerte : en.getListeAlertes())
+			for(AlerteAbonnement alerte : en.getListeAlertes())
 			{
-				if(alerte.getUser().equals(this))
+				if(alerte.getAcheteur().equals(this))
 				{
-					alerte.setEnchereAnnulee(prixRes);
+					alerte.setEnchereAnnulee(annulation);
 					i = 1;
 					return;
 				}
 			}
 			if(i == 0)
 			{
-				en.getListeAlertes().add(new Alerte(this, true, true, prixRes));
+				en.getListeAlertes().add(new AlerteAbonnement(this, true, true, annulation));
 			}
 		}
 		else
@@ -148,11 +154,11 @@ public class Utilisateur implements Acheteur, Vendeur{
 		}
 	}
 		
-	public int VerfierAlerteUtilisateur(Enchere en)
+	private int verfierAlerteUtilisateur(Enchere en)
 	{
-		for(Alerte alerte : en.getListeAlertes())
+		for(AlerteAbonnement alerte : en.getListeAlertes())
 		{
-			if(alerte.getUser().equals(this))
+			if(alerte.getAcheteur().equals(getLogin()))
 				return 1;
 		}
 		return 0;
@@ -189,25 +195,28 @@ public class Utilisateur implements Acheteur, Vendeur{
 	protected void seConnecte()
 	{
 		this.setModeConnexion(ModeConnexion.Connecté);
-		ListeUtilisateurConnecteSingleton.getInstance().ajouteUtilisateur(this);
+
 	}
 	
 	protected void seDeconnecte()
 	{
 		this.setModeConnexion(ModeConnexion.Deconnecté);
-		ListeUtilisateurConnecteSingleton.getInstance().supprimeUtilisateur(this);
+
 	}
+
 	
-	public Enchere CreeEnchere(String description, String identifiant, float prixMin, float prixReserve)
+	public Enchere creerEnchere(String description, String identifiant, float prixMin, float prixReserve, int nbrHeure)
 	{
-			Enchere enchere = new Enchere(description, identifiant, prixMin, prixReserve, this);//TOTO passer un parametre de temps peut-etre ?
+
+			Enchere enchere = new Enchere(description, identifiant, prixMin, prixReserve, this, nbrHeure);
 			ListeEnchereSingleton.getInstance().ajouteEnchere(enchere);
 			return enchere;
 	}
+
 	
-	public void PublieEnchere(Enchere en)
+	public void publierEnchere(Enchere en)
 	{
-		if((this.equals(en.getUtilisateur())) && (en != null))
+		if( (en != null) && (this.equals(en.getVendeur())))
 		{
 			en.setEtatEnchere(EtatEnchere.Publiée);
 		}
@@ -218,14 +227,14 @@ public class Utilisateur implements Acheteur, Vendeur{
 		
 	}
 	
-	public void AnnuleEnchere(Enchere en)
+	public void annulerEnchere(Enchere en)
 	{
-		if(this.equals(en.getUtilisateur()) && (en != null))
-		{
-			if(en.getListeOffres().get(en.getListeOffres().size() - 1).getPrixOffre() < en.getPrixReserve(en.getUtilisateur())) // On vérifie bien que le prix de reserve n'as pas été atteint
+		if( (en != null) && this.equals(en.getVendeur()) )
+		{	
+			if( en.getListeOffres().isEmpty() || (en.getListeOffres().get(en.getListeOffres().size() - 1).getPrixOffre() < en.getPrixReserve(en.getVendeur()))) // On vérifie bien que le prix de reserve n'as pas été atteint
 			{
 				en.setEtatEnchere(EtatEnchere.Annulée);
-				Alerte.EnchereAnnulee(en);
+				Alerte.enchereAnnulee(en);
 			}
 			else
 			{
@@ -237,11 +246,16 @@ public class Utilisateur implements Acheteur, Vendeur{
 			System.out.println("Vérifiez que l'enchere que vous voulez publiez existe bien");
 		}
 	}
+
 	
-	/*public ArrayList<Enchere> getListeEncheresVisibles()
-	{
-		return this.encheresVisibles;
-	}*/
-	
-	
+
+
+	public void configurerAlertes(Enchere en, boolean prixRes, boolean annulation, boolean offreSup) {
+		configurerAlertePrixReserve(en, prixRes);
+		configurerAlerteOffreSup(en, offreSup);
+		configurerAlerteEnchereAnnulee(en, annulation);
+		
+	}
+
+
 }

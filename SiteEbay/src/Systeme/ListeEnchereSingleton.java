@@ -1,10 +1,11 @@
 package Systeme;
 import java.util.*;
 
+import Utilisateur.Utilisateur;
 import Enchere.Enchere;
 import Enchere.EtatEnchere;
 import Enchere.Offre;
-import Utilisateur.Utilisateur;
+
 
 
 public class ListeEnchereSingleton {
@@ -32,12 +33,29 @@ public class ListeEnchereSingleton {
            this.listeEnchere.add(en);
     }
 	
+	public Enchere getEnchereByDesc (String Description) {
+		for(Enchere enchere : this.listeEnchere)
+		{
+			if (enchere.getObjet().getDescription().equals(Description)){
+				return enchere;
+			}
+		}
+		return null;
+	}
+	
+	public void deleteAllEnchere(){
+		while ( listeEnchere.size() > 0){
+			listeEnchere.remove(0);
+		}
+		return;
+	}
+	
 	public ArrayList<Enchere> getlisteEnchereVisible(Utilisateur user)
 	{
 		ArrayList<Enchere> listeEnchereVisible = new ArrayList<Enchere>();
 		for(Enchere enchere : this.listeEnchere)
 		{
-			if(enchere.getUtilisateur().equals(user))
+			if(enchere.getVendeur().equals(user))
 			{
 				listeEnchereVisible.add(enchere);
 			}
@@ -49,7 +67,7 @@ public class ListeEnchereSingleton {
 			{
 				for(Offre offre : enchere.getListeOffres())
 				{
-					if(offre.getUtilisateur().equals(user))
+					if(offre.getAcheteur().equals(user))
 					{
 						listeEnchereVisible.add(enchere);
 						break;

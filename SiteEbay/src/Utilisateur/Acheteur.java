@@ -5,9 +5,7 @@ import Enchere.Offre;
 
 public interface Acheteur {
 
-	public Offre CreeOffre(Enchere en, float prixO);
-	public void ConfigurationAlertePrixReserve(Enchere en, boolean prixRes);
-	public void ConfigurationAlerteOffreSup(Enchere en, boolean prixRes);
-	public void ConfigurationAlerteEnchereAnnulee(Enchere en, boolean prixRes);
+	public Offre deposerOffre(Enchere en, float prixO);
+	public void configurerAlertes (Enchere en, boolean prixRes, boolean annulation, boolean offreSup);
 	
 }

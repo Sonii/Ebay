@@ -1,21 +1,22 @@
 package Enchere;
+
 import Utilisateur.Utilisateur;
 
 
 public class Offre {
 
-	private Utilisateur utilisateur;
+	private Utilisateur acheteur;
 	private float prixOffre = 0;
 	
 	public Offre(Utilisateur user, float prixO)
 	{
-		this.utilisateur = user;
+		this.acheteur = user;
 		this.prixOffre = prixO;
 	}
 	
-	public Utilisateur getUtilisateur()
+	public Utilisateur getAcheteur()
 	{
-		return this.utilisateur;
+		return this.acheteur;
 	}
 	
 	public float getPrixOffre()

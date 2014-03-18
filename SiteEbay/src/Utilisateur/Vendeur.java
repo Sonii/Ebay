@@ -4,8 +4,8 @@ import Enchere.Enchere;
 
 public interface Vendeur {
 	
-	public Enchere CreeEnchere(String description, String identifiant, float prixMin, float prixReserve);
-	public void PublieEnchere(Enchere en);
-	public void AnnuleEnchere(Enchere en);
+	public Enchere creerEnchere(String description, String identifiant, float prixMin, float prixReserve, int nbrHeure);
+	public void publierEnchere(Enchere en);
+	public void annulerEnchere(Enchere en);
 	
 }

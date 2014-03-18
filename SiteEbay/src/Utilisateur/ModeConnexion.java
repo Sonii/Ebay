@@ -1,4 +1,4 @@
-package Systeme;
+package Utilisateur;
 
 public enum ModeConnexion {
 

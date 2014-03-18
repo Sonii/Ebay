@@ -12,19 +12,19 @@ public class HorlogeSingleton {
 		private static HorlogeSingleton uniqueInstance;
 	
 	  // Définition des attributs
-		Calendar cal = Calendar.getInstance();
-		Date dateInit = new Date();
+		private Calendar cal = Calendar.getInstance();
+		private Date dateInit = new Date();
 
-		protected static final SimpleDateFormat dateHeureFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		protected static SimpleDateFormat dateHeureFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		
-	  int heures;
-	  int minutes;
-	  int jours;
-	  int annee;
+	   private int heures;
+	   private int minutes;
+	  private int jours;
+	  private int annee;
 	 
 	  // Définition des méthodes
 	 
-	  public void incrementeHeure()
+	  private void incrementeTemps()
 	  {
 
 	      minutes++;
@@ -46,10 +46,12 @@ public class HorlogeSingleton {
 	 
 	  public Date getTemps() 
 	  {
+
 			cal.set(Calendar.HOUR_OF_DAY,heures);
 			cal.set(Calendar.MINUTE,minutes);
 			cal.set(Calendar.DAY_OF_YEAR,jours);
 			cal.set(Calendar.YEAR,annee);
+			
 	    return cal.getTime();
 	  }
 	 
@@ -63,9 +65,11 @@ public class HorlogeSingleton {
 	            return uniqueInstance;
 	    }
 	  
-	  public HorlogeSingleton ()
+	  private HorlogeSingleton ()
 	  {
 			cal.setTime(dateInit);
+		  	cal.set(Calendar.MILLISECOND,0);
+		  	cal.set(Calendar.SECOND,0);
 			heures=cal.get(Calendar.HOUR_OF_DAY);
 			minutes=cal.get(Calendar.MINUTE);
 			jours=cal.get(Calendar.DAY_OF_YEAR);
@@ -77,12 +81,12 @@ public class HorlogeSingleton {
 				@Override
 				public void run() 
 				{
-					incrementeHeure();
+					incrementeTemps();
 				}	
 			};
 			
 			Timer timer = new Timer();
-			timer.scheduleAtFixedRate(task, 0, 10); // commence à 0
+			timer.scheduleAtFixedRate(task, 0, 1); // commence à 0
 		}
 	  
 }

@@ -9,36 +9,38 @@ public class Enchere {
 
 	private Objet objet;
 	private ArrayList<Offre> offres;
-	private ArrayList<Alerte> alertes;
+	private ArrayList<AlerteAbonnement> alerteAbonnements;
 	private float prixMinimum = 0;
 	private float prixReserve = 0;
 	private Date dateCreation;
 	private Date dateExpiration;
-	private Utilisateur utilisateur;
+	private Utilisateur vendeur;
 	private EtatEnchere etatEnchere;
 	private Timer timer;
 	
-	public Enchere(String description, String identifiant, float prixMin, float prixReserve, Utilisateur user)
+	public Enchere(String description, String identifiant, float prixMin, float prixReserve, Utilisateur vendeur, int heures)
 	{
 		this.objet = new Objet(description, identifiant);
 		this.offres = new ArrayList<Offre>();
-		this.alertes = new ArrayList<Alerte>();
+		this.alerteAbonnements = new ArrayList<AlerteAbonnement>();
 		this.prixMinimum = prixMin;
 		this.prixReserve = prixReserve;
-		this.utilisateur = user;
+		this.vendeur = vendeur;
 		this.etatEnchere = EtatEnchere.Crée;
 		this.dateCreation = HorlogeSingleton.getInstance().getTemps();
-		this.dateExpiration = new Date(dateCreation.getTime() + new Date(1000*60*60*2).getTime());
+		this.dateExpiration = new Date(dateCreation.getTime() + new Date(1000*60*60*heures).getTime());
 		this.timer=new Timer();  //At this line a new Thread will be created
-        timer.schedule(new Verification(this, dateExpiration), 0, 1);
+        timer.schedule(new VerificationTache(this, dateExpiration), 0, 10);
 	}
 	
 
 /* Getteres and Setters*/
-	
-	public ArrayList<Alerte> getListeAlertes()
+	// TOTO faire la methode enchere terminer => lance l'alerte{
+	//Alerte.EnchereTerminee(this.enchere);
+    //}
+	public ArrayList<AlerteAbonnement> getListeAlertes()
 	{
-		return this.alertes;
+		return this.alerteAbonnements;
 	}
 	
 	public ArrayList<Offre> getListeOffres()
@@ -46,9 +48,9 @@ public class Enchere {
 		return this.offres;
 	}
 	
-	public Float getPrixReserve(Utilisateur user)
+	public Float getPrixReserve(Utilisateur utilisateur)
 	{
-		if(this.utilisateur.equals(user))
+		if(this.vendeur.equals(utilisateur))
 		{
 			return this.prixReserve;
 		}
@@ -57,6 +59,15 @@ public class Enchere {
 			System.out.println("Le prix de reserve d'une enchere n'est visible que par son vendeur");
 			return null;
 		}
+	}
+	
+	public AlerteAbonnement getAlerte (Utilisateur acheteur){
+		for (AlerteAbonnement aa : this.getListeAlertes() ){
+			if (aa.getAcheteur()==acheteur){
+				return aa;
+			}
+		}
+		return null;
 	}
 	
 	public void setEtatEnchere(EtatEnchere etat)
@@ -69,9 +80,9 @@ public class Enchere {
 		return this.objet;
 	}
 	
-	public Utilisateur getUtilisateur()
+	public Utilisateur getVendeur()
 	{
-		return this.utilisateur; 
+		return this.vendeur; 
 	}
 	
 	public float getPrixMinimum()
@@ -84,8 +95,14 @@ public class Enchere {
 		return this.dateCreation;
 	}
 	
+	public Date getDateExpiration()
+	{
+		return this.dateExpiration;
+	}
+	
 	public EtatEnchere getEtatEnchere()
 	{
 		return this.etatEnchere;
 	}
+
 }

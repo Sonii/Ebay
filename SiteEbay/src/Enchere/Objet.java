@@ -5,18 +5,18 @@ public class Objet {
 	private String identifiant;
 	private String description;
 	
-	public Objet(String identifiant, String description)
+	public Objet(String description, String identifiant)
 	{
 		this.description = description;
 		this.identifiant = identifiant;
 	}
 	
-	protected String getIdentifiant()
+	public String getIdentifiant()
 	{
 		return this.identifiant;
 	}
 	
-	protected String getDescription()
+	public String getDescription()
 	{
 		return this.description;
 	}
