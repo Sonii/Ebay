@@ -3,7 +3,7 @@ package metier.Enchere;
 import java.util.Date;
 import java.util.TimerTask;
 
-import metier.Systeme.Alerte;
+import metier.Enchere.Alerte;
 import metier.Systeme.HorlogeSingleton;
 
 public class VerificationTache extends TimerTask{

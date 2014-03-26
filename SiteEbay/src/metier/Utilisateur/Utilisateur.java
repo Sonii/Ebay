@@ -1,12 +1,11 @@
 package metier.Utilisateur;
 import java.util.*;
 
-import metier.Enchere.AlerteAbonnement;
 import metier.Enchere.Enchere;
 import metier.Enchere.EtatEnchere;
 import metier.Enchere.Offre;
 import metier.Enchere.OffreComparator;
-import metier.Systeme.Alerte;
+import metier.Enchere.Alerte;
 import metier.Systeme.ListeEnchereSingleton;
 import metier.Systeme.ListeUtilisateurSingleton;
 
@@ -59,9 +58,9 @@ public class Utilisateur implements Acheteur, Vendeur{
 				Offre offre = new Offre(this, prixO);
 				if(this.verfierAlerteUtilisateur(en) == 0)
 				{
-					en.getListeAlertes().add(new AlerteAbonnement(this, true,true,true));
+					en.getListeAlertes().add(new Alerte(this, true,true,true));
 				}
-				Alerte.alerteVendeur(this, offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
+				Alerte.alerteVendeur(en.getVendeur(), offre); // A chaque fois qu'une offre est émise le vendeur est prévenu
 				en.getListeOffres().add(offre); // On ajoute l'offre au tableau
 				Collections.sort(en.getListeOffres(), new OffreComparator()); // On tri le tableau selon l'ordre ascendant des pris d'offres
 				Alerte.offreSuperieure(offre, en); // On regarde si cette offre a le plus grand prix d'offre
@@ -100,7 +99,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 		int i = 0;
 		if(!en.getVendeur().equals(this))
 		{
-			for(AlerteAbonnement alerte : en.getListeAlertes())
+			for(Alerte alerte : en.getListeAlertes())
 			{
 				if(alerte.getAcheteur().equals(this))
 				{
@@ -111,7 +110,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 			}
 			if(i == 0)
 			{
-				en.getListeAlertes().add(new AlerteAbonnement(this, prixRes, true, true));
+				en.getListeAlertes().add(new Alerte(this, prixRes, true, true));
 			}
 		}
 		else
@@ -126,7 +125,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 		
 		if(!en.getVendeur().equals(this))
 		{
-			for(AlerteAbonnement alerte : en.getListeAlertes())
+			for(Alerte alerte : en.getListeAlertes())
 			{
 				if(alerte.getAcheteur().equals(this))
 				{
@@ -137,7 +136,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 			}
 			if(i == 0)
 			{
-				en.getListeAlertes().add(new AlerteAbonnement(this, true, prixRes, true));
+				en.getListeAlertes().add(new Alerte(this, true, prixRes, true));
 			}
 		}
 		else
@@ -151,7 +150,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 		int i = 0;
 		if(!en.getVendeur().equals(this))
 		{
-			for(AlerteAbonnement alerte : en.getListeAlertes())
+			for(Alerte alerte : en.getListeAlertes())
 			{
 				if(alerte.getAcheteur().equals(this))
 				{
@@ -162,7 +161,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 			}
 			if(i == 0)
 			{
-				en.getListeAlertes().add(new AlerteAbonnement(this, true, true, annulation));
+				en.getListeAlertes().add(new Alerte(this, true, true, annulation));
 			}
 		}
 		else
@@ -173,7 +172,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 		
 	private int verfierAlerteUtilisateur(Enchere en)
 	{
-		for(AlerteAbonnement alerte : en.getListeAlertes())
+		for(Alerte alerte : en.getListeAlertes())
 		{
 			if(alerte.getAcheteur().equals(getLogin()))
 				return 1;
@@ -267,6 +266,9 @@ public class Utilisateur implements Acheteur, Vendeur{
 
 
 	public void configurerAlertes(Enchere en, boolean prixRes, boolean annulation, boolean offreSup) {
+		
+		if (en == null)
+			return;
 		configurerAlertePrixReserve(en, prixRes);
 		configurerAlerteOffreSup(en, offreSup);
 		configurerAlerteEnchereAnnulee(en, annulation);

@@ -9,7 +9,7 @@ public class Enchere {
 
 	private Objet objet;
 	private ArrayList<Offre> offres;
-	private ArrayList<AlerteAbonnement> alerteAbonnements;
+	private ArrayList<Alerte> alerteAbonnements;
 	private float prixMinimum = 0;
 	private float prixReserve = 0;
 	private Date dateCreation;
@@ -22,7 +22,7 @@ public class Enchere {
 	{
 		this.objet = new Objet(description, identifiant);
 		this.offres = new ArrayList<Offre>();
-		this.alerteAbonnements = new ArrayList<AlerteAbonnement>();
+		this.alerteAbonnements = new ArrayList<Alerte>();
 		this.prixMinimum = prixMin;
 		this.prixReserve = prixReserve;
 		this.vendeur = vendeur;
@@ -38,7 +38,7 @@ public class Enchere {
 	// TOTO faire la methode enchere terminer => lance l'alerte{
 	//Alerte.EnchereTerminee(this.enchere);
     //}
-	public ArrayList<AlerteAbonnement> getListeAlertes()
+	public ArrayList<Alerte> getListeAlertes()
 	{
 		return this.alerteAbonnements;
 	}
@@ -61,8 +61,8 @@ public class Enchere {
 		}
 	}
 	
-	public AlerteAbonnement getAlerte (Utilisateur acheteur){
-		for (AlerteAbonnement aa : this.getListeAlertes() ){
+	public Alerte getAlerte (Utilisateur acheteur){
+		for (Alerte aa : this.getListeAlertes() ){
 			if (aa.getAcheteur()==acheteur){
 				return aa;
 			}
@@ -104,5 +104,4 @@ public class Enchere {
 	{
 		return this.etatEnchere;
 	}
-
 }

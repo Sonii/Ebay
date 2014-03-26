@@ -3,6 +3,7 @@ import java.util.*;
 
 import metier.Utilisateur.Utilisateur;
 import metier.Enchere.Enchere;
+import metier.Enchere.EnchereDAO;
 import metier.Enchere.EtatEnchere;
 import metier.Enchere.Offre;
 
@@ -13,6 +14,7 @@ public class ListeEnchereSingleton {
 	private static ListeEnchereSingleton uniqueInstance;
 	public ArrayList<Enchere> listeEnchere;
 
+	private EnchereDAO dao;
 	
 	private ListeEnchereSingleton()
 	{
@@ -82,5 +84,18 @@ public class ListeEnchereSingleton {
 	{
 		this.listeEnchere.remove(en);
 	}
+
+	public void setDao(EnchereDAO dao) {
+		this.dao = dao;
+	}
 	
+	public boolean sauvegarderEncheres (){
+		return this.dao.sauvegarderBDD(this.listeEnchere);
+	}
+
+	public boolean chargerEncheres() {
+		this.listeEnchere=this.dao.chargerBDD();
+		return true;
+	}
+
 }

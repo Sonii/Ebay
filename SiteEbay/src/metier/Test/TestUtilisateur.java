@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import metier.Enchere.AlerteAbonnement;
+import metier.Enchere.Alerte;
 import metier.Enchere.EtatEnchere;
 import metier.Enchere.Offre;
 import metier.Systeme.ListeEnchereSingleton;
@@ -135,7 +135,7 @@ public class TestUtilisateur {
 		listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 1);
 		listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		listUsers.getUtilisateur("Sonii").configurerAlertes(listEnchere.getEnchereByDesc("Playstation"), true, true, true);
-		AlerteAbonnement aa = listEnchere.getEnchereByDesc("Playstation").getAlerte(listUsers.getUtilisateur("Sonii"));
+		Alerte aa = listEnchere.getEnchereByDesc("Playstation").getAlerte(listUsers.getUtilisateur("Sonii"));
 		assertNull(aa);
 	}
 	
@@ -146,7 +146,7 @@ public class TestUtilisateur {
 		listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 1);
 		listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		listUsers.getUtilisateur("Malilou").configurerAlertes(listEnchere.getEnchereByDesc("Playstation"), true, true, true);
-		AlerteAbonnement aa = listEnchere.getEnchereByDesc("Playstation").getAlerte(listUsers.getUtilisateur("Malilou"));
+		Alerte aa = listEnchere.getEnchereByDesc("Playstation").getAlerte(listUsers.getUtilisateur("Malilou"));
 		assertNotNull(aa);
 	}
 	

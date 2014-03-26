@@ -114,5 +114,22 @@ public class TestAlert {
 		 listUsers.getUtilisateur("Sonii").annulerEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		 assertEquals(EtatEnchere.Annulée,listEnchere.getEnchereByDesc("Playstation").getEtatEnchere());
 	}
+	
+	@Test
+	public void TestAlerteAcheteurAnchereAnnuléSansAbonnement() {
+		 System.out.println("Pas d'alerte");
+		 Utilisateur.creerUtilisateur("Sonii", "Thomas", "Remond");
+		 Utilisateur.creerUtilisateur("Malilou", "Hajar", "Malil");
+		 Utilisateur.creerUtilisateur("lol", "Haaa", "Marrant");
+		 listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 10);
+		 listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
+		 listUsers.getUtilisateur("Malilou").configurerAlertes(listEnchere.getEnchereByDesc("Playstation"),false,false,false);
+		 listUsers.getUtilisateur("lol").configurerAlertes(listEnchere.getEnchereByDesc("Playstation"),false,false,false);
+		 listUsers.getUtilisateur("Malilou").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 10);
+		 listUsers.getUtilisateur("lol").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 100);
+		 listUsers.getUtilisateur("Sonii").annulerEnchere(listEnchere.getEnchereByDesc("Playstation"));
+		 assertEquals(EtatEnchere.Annulée,listEnchere.getEnchereByDesc("Playstation").getEtatEnchere());
+
+	}
 }
 
