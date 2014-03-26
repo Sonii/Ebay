@@ -1,4 +1,4 @@
-package Enchere;
+package metier.Enchere;
 import java.util.Comparator;
 
 public class OffreComparator implements Comparator<Offre>{

@@ -1,6 +1,6 @@
-package Enchere;
+package metier.Enchere;
 
-import Utilisateur.Utilisateur;
+import metier.Utilisateur.Utilisateur;
 
 
 public class AlerteAbonnement {

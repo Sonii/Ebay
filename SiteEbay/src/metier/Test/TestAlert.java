@@ -1,4 +1,4 @@
-package Test;
+package metier.Test;
 
 import static org.junit.Assert.*;
 
@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Enchere.EtatEnchere;
-import Systeme.ListeEnchereSingleton;
-import Systeme.ListeUtilisateurSingleton;
-import Utilisateur.Utilisateur;
+import metier.Enchere.EtatEnchere;
+import metier.Systeme.ListeEnchereSingleton;
+import metier.Systeme.ListeUtilisateurSingleton;
+import metier.Utilisateur.Utilisateur;
 
 public class TestAlert {
 
@@ -40,7 +40,7 @@ public class TestAlert {
 	@Test
 	public void TestAlerteEnchereTermineVendeur() {
 
-		 new Utilisateur ("Sonii","Thomas", "REMOND");
+		 Utilisateur.creerUtilisateur("Sonii", "Thomas", "Remond");
 		 listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 10);
 		 try {  
 	         Thread.sleep(1000);  //le temps (1ms) que le system detecte que la date a été atteinte
@@ -53,8 +53,8 @@ public class TestAlert {
 	@Test
 	public void TestAlerteEnchereEffectueVendeur() {
 
-		 new Utilisateur ("Sonii","Thomas", "REMOND");
-		 new Utilisateur ("Malilou","Hajar", "MALIL");
+		 Utilisateur.creerUtilisateur("Sonii", "Thomas", "Remond");
+		 Utilisateur.creerUtilisateur("Malilou", "Hajar", "Malil");
 		 listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 10);
 		 listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		 listUsers.getUtilisateur("Malilou").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 10);
@@ -68,9 +68,9 @@ public class TestAlert {
 	@Test
 	public void TestAlerteAcheteurOffreSuperieur() {
 
-		 new Utilisateur ("Sonii","Thomas", "REMOND");
-		 new Utilisateur ("Malilou","Hajar", "MALIL");
-		 new Utilisateur ("lol","Haaa", "MARANT");
+		 Utilisateur.creerUtilisateur("Sonii", "Thomas", "Remond");
+		 Utilisateur.creerUtilisateur("Malilou", "Hajar", "Malil");
+		 Utilisateur.creerUtilisateur("lol", "Haaa", "Marrant");
 		 listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 10);
 		 listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		 listUsers.getUtilisateur("Malilou").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 10);
@@ -86,9 +86,9 @@ public class TestAlert {
 	@Test
 	public void TestAlerteAcheteurPrixReserveAtteint() {
 
-		 new Utilisateur ("Sonii","Thomas", "REMOND");
-		 new Utilisateur ("Malilou","Hajar", "MALIL");
-		 new Utilisateur ("lol","Haaa", "MARANT");
+		 Utilisateur.creerUtilisateur("Sonii", "Thomas", "Remond");
+		 Utilisateur.creerUtilisateur("Malilou", "Hajar", "Malil");
+		 Utilisateur.creerUtilisateur("lol", "Haaa", "Marrant");
 		 listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 10);
 		 listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		 listUsers.getUtilisateur("Malilou").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 10);
@@ -104,9 +104,9 @@ public class TestAlert {
 	@Test
 	public void TestAlerteAcheteurAnchereAnnulé() {
 
-		 new Utilisateur ("Sonii","Thomas", "REMOND");
-		 new Utilisateur ("Malilou","Hajar", "MALIL");
-		 new Utilisateur ("lol","Haaa", "MARANT");
+		 Utilisateur.creerUtilisateur("Sonii", "Thomas", "Remond");
+		 Utilisateur.creerUtilisateur("Malilou", "Hajar", "Malil");
+		 Utilisateur.creerUtilisateur("lol", "Haaa", "Marrant");
 		 listUsers.getUtilisateur("Sonii").creerEnchere("Playstation", "13ADDS64K", 1, 100, 10);
 		 listUsers.getUtilisateur("Sonii").publierEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		 listUsers.getUtilisateur("Malilou").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 10);

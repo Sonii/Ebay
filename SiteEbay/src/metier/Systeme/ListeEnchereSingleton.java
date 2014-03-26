@@ -1,10 +1,10 @@
-package Systeme;
+package metier.Systeme;
 import java.util.*;
 
-import Utilisateur.Utilisateur;
-import Enchere.Enchere;
-import Enchere.EtatEnchere;
-import Enchere.Offre;
+import metier.Utilisateur.Utilisateur;
+import metier.Enchere.Enchere;
+import metier.Enchere.EtatEnchere;
+import metier.Enchere.Offre;
 
 
 

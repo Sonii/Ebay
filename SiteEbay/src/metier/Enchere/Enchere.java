@@ -1,8 +1,8 @@
-package Enchere;
+package metier.Enchere;
 import java.util.*;
 
-import Systeme.HorlogeSingleton;
-import Utilisateur.Utilisateur;
+import metier.Systeme.HorlogeSingleton;
+import metier.Utilisateur.Utilisateur;
 
 
 public class Enchere {

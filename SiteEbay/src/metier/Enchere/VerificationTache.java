@@ -1,10 +1,10 @@
-package Enchere;
+package metier.Enchere;
 
 import java.util.Date;
 import java.util.TimerTask;
 
-import Systeme.Alerte;
-import Systeme.HorlogeSingleton;
+import metier.Systeme.Alerte;
+import metier.Systeme.HorlogeSingleton;
 
 public class VerificationTache extends TimerTask{
 	

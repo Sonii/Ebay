@@ -1,5 +1,5 @@
-package Utilisateur;
-import Enchere.Enchere;
+package metier.Utilisateur;
+import metier.Enchere.Enchere;
 
 
 public interface Vendeur {

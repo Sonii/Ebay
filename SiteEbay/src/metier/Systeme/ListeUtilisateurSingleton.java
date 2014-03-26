@@ -1,7 +1,8 @@
-package Systeme;
+package metier.Systeme;
 import java.util.ArrayList;
 
-import Utilisateur.Utilisateur;
+import metier.Utilisateur.ModeConnexion;
+import metier.Utilisateur.Utilisateur;
 
 
 public class ListeUtilisateurSingleton {
@@ -53,10 +54,34 @@ public class ListeUtilisateurSingleton {
 		
 		return this.listeUtilisateur;
 	}
-	public ArrayList<Utilisateur> voirListeUtilisateurConnecte()
+	
+	public boolean verifierExistanceLogin(String login)
 	{
-		//filtrer que les connecter...
-		return this.listeUtilisateur;
+		int i = 0;
+		for(Utilisateur util : this.listeUtilisateur)
+		{
+			if(util.getLogin().equals(login))
+			{
+				i = 1;
+				System.out.println("Le mot de passe que vous avez entré existe déjà, essayez un nouveau mot de passe");
+				break;
+			}
+		}
+		if(i == 1)
+			return false;
+		else 
+			return true;
+	}
+	
+	public ArrayList<Utilisateur> getListeUtilisateurConnecte()
+	{
+		ArrayList<Utilisateur> listeUtilisateurConnectes = new ArrayList<Utilisateur>();
+		for(Utilisateur util : this.listeUtilisateur)
+		{
+			if(util.getModeConnexion() == ModeConnexion.Connecté)
+				listeUtilisateurConnectes.add(util);
+		}
+		return listeUtilisateurConnectes;
 	}
 	
 	public void supprimerUtilisateur(Utilisateur user)

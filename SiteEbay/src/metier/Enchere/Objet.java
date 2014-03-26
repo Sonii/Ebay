@@ -1,4 +1,4 @@
-package Enchere;
+package metier.Enchere;
 
 public class Objet {
 

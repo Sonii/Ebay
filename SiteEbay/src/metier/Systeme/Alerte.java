@@ -1,9 +1,9 @@
-package Systeme;
+package metier.Systeme;
 
-import Utilisateur.Utilisateur;
-import Enchere.AlerteAbonnement;
-import Enchere.Enchere;
-import Enchere.Offre;
+import metier.Utilisateur.Utilisateur;
+import metier.Enchere.AlerteAbonnement;
+import metier.Enchere.Enchere;
+import metier.Enchere.Offre;
 
 public class Alerte {
 

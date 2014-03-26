@@ -1,4 +1,4 @@
-package Enchere;
+package metier.Enchere;
 
 public enum EtatEnchere {
 

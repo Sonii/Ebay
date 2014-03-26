@@ -1,14 +1,14 @@
-package Utilisateur;
+package metier.Utilisateur;
 import java.util.*;
 
-import Enchere.AlerteAbonnement;
-import Enchere.Enchere;
-import Enchere.EtatEnchere;
-import Enchere.Offre;
-import Enchere.OffreComparator;
-import Systeme.Alerte;
-import Systeme.ListeEnchereSingleton;
-import Systeme.ListeUtilisateurSingleton;
+import metier.Enchere.AlerteAbonnement;
+import metier.Enchere.Enchere;
+import metier.Enchere.EtatEnchere;
+import metier.Enchere.Offre;
+import metier.Enchere.OffreComparator;
+import metier.Systeme.Alerte;
+import metier.Systeme.ListeEnchereSingleton;
+import metier.Systeme.ListeUtilisateurSingleton;
 
 
 public class Utilisateur implements Acheteur, Vendeur{
@@ -18,15 +18,32 @@ public class Utilisateur implements Acheteur, Vendeur{
 	private String nom = "";
 	private ModeConnexion modeConnexion;
 
-	public Utilisateur(String login, String prenom, String nom)
+	private Utilisateur(String login, String prenom, String nom)
 	{
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.modeConnexion = ModeConnexion.Connecté;
 		ListeUtilisateurSingleton.getInstance().ajouteUtilisateur(this);
 		
 	}
 
+	public ArrayList<Utilisateur> voirListeUtilisateurConnecte()
+	{
+		return ListeUtilisateurSingleton.getInstance().getListeUtilisateurConnecte();
+	}
+	
+	public static void creerUtilisateur(String login, String prenom, String nom)
+	{
+		if(ListeUtilisateurSingleton.getInstance().verifierExistanceLogin(login))
+		{
+			ListeUtilisateurSingleton.getInstance().ajouteUtilisateur(new Utilisateur(login, prenom, nom));
+		}
+		else
+		{
+			System.out.println("Votre mot de passe existe déjà, essayez un autre logins");
+		}
+	}
 	
 	public Offre deposerOffre(Enchere en, float prixO)
 	{
@@ -182,7 +199,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 		return this.login;
 	}
 	
-	protected ModeConnexion getModeConnexion()
+	public ModeConnexion getModeConnexion()
 	{
 		return this.modeConnexion;
 	}
@@ -192,16 +209,15 @@ public class Utilisateur implements Acheteur, Vendeur{
 		this.modeConnexion = mode;
 	}
 	
-	protected void seConnecte()
+	public void seConnecte()
 	{
 		this.setModeConnexion(ModeConnexion.Connecté);
 
 	}
 	
-	protected void seDeconnecte()
+	public void seDeconnecte()
 	{
 		this.setModeConnexion(ModeConnexion.Deconnecté);
-
 	}
 
 	

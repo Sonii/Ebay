@@ -1,6 +1,6 @@
-package Utilisateur;
-import Enchere.Enchere;
-import Enchere.Offre;
+package metier.Utilisateur;
+import metier.Enchere.Enchere;
+import metier.Enchere.Offre;
 
 
 public interface Acheteur {
