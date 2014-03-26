@@ -9,7 +9,7 @@ public class Enchere {
 
 	private Objet objet;
 	private ArrayList<Offre> offres;
-	private ArrayList<Alerte> alerteAbonnements;
+	private ArrayList<Alerte> alertes;
 	private float prixMinimum = 0;
 	private float prixReserve = 0;
 	private Date dateCreation;
@@ -22,7 +22,7 @@ public class Enchere {
 	{
 		this.objet = new Objet(description, identifiant);
 		this.offres = new ArrayList<Offre>();
-		this.alerteAbonnements = new ArrayList<Alerte>();
+		this.alertes = new ArrayList<Alerte>();
 		this.prixMinimum = prixMin;
 		this.prixReserve = prixReserve;
 		this.vendeur = vendeur;
@@ -40,7 +40,7 @@ public class Enchere {
     //}
 	public ArrayList<Alerte> getListeAlertes()
 	{
-		return this.alerteAbonnements;
+		return this.alertes;
 	}
 	
 	public ArrayList<Offre> getListeOffres()

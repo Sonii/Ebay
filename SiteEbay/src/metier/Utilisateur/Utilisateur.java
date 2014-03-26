@@ -174,7 +174,7 @@ public class Utilisateur implements Acheteur, Vendeur{
 	{
 		for(Alerte alerte : en.getListeAlertes())
 		{
-			if(alerte.getAcheteur().equals(getLogin()))
+			if(alerte.getAcheteur().equals(this))
 				return 1;
 		}
 		return 0;

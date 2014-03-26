@@ -15,8 +15,8 @@ import metier.Utilisateur.Utilisateur;
 public class TestAlert {
 
 
-	private static  ListeUtilisateurSingleton listUsers;
-	private static  ListeEnchereSingleton listEnchere;
+	private static ListeUtilisateurSingleton listUsers;
+	private static ListeEnchereSingleton listEnchere;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -126,7 +126,7 @@ public class TestAlert {
 		 listUsers.getUtilisateur("Malilou").configurerAlertes(listEnchere.getEnchereByDesc("Playstation"),false,false,false);
 		 listUsers.getUtilisateur("lol").configurerAlertes(listEnchere.getEnchereByDesc("Playstation"),false,false,false);
 		 listUsers.getUtilisateur("Malilou").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 10);
-		 listUsers.getUtilisateur("lol").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 100);
+		 listUsers.getUtilisateur("lol").deposerOffre(listEnchere.getEnchereByDesc("Playstation"), 90);
 		 listUsers.getUtilisateur("Sonii").annulerEnchere(listEnchere.getEnchereByDesc("Playstation"));
 		 assertEquals(EtatEnchere.Annulée,listEnchere.getEnchereByDesc("Playstation").getEtatEnchere());
 

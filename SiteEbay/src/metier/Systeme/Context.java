@@ -1,20 +1,29 @@
 package metier.Systeme;
 
 import metier.Enchere.JDBCEnchereDAO;
+import metier.Utilisateur.JDBCUtilisateurDAO;
 
 public class Context {
 
 	private ListeEnchereSingleton singEncheres = ListeEnchereSingleton.getInstance();
-	private JDBCEnchereDAO jdbc = new JDBCEnchereDAO();
+	private JDBCEnchereDAO jdbcE = new JDBCEnchereDAO();
+	private ListeUtilisateurSingleton singUtilisateur = ListeUtilisateurSingleton.getInstance();
+	private JDBCUtilisateurDAO jdbcU = new JDBCUtilisateurDAO();
 	
-	public boolean open() {
-		singEncheres.setDao(jdbc);
-		return singEncheres.chargerEncheres();
+	public boolean openEbay() {
+		singEncheres.setDao(jdbcE);
+		singUtilisateur.setDao(jdbcU);
+		singEncheres.chargerEncheres();
+		singUtilisateur.chargerUtilisateur();
+		return true;
 	}
 	
-	public boolean close() {
+	public boolean closeEbay() {
 		
-		singEncheres.setDao(jdbc);
-		return singEncheres.sauvegarderEncheres();
+		singEncheres.setDao(jdbcE);
+		singUtilisateur.setDao(jdbcU);
+		singEncheres.sauvegarderEncheres();
+		singUtilisateur.sauvegarderUtilisateur();
+		return true;
 	}
 }

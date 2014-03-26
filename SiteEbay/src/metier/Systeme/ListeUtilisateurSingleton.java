@@ -1,14 +1,17 @@
 package metier.Systeme;
 import java.util.ArrayList;
 
+import metier.Utilisateur.JDBCUtilisateurDAO;
 import metier.Utilisateur.ModeConnexion;
 import metier.Utilisateur.Utilisateur;
+import metier.Utilisateur.UtilisateurDAO;
 
 
 public class ListeUtilisateurSingleton {
 
 	private static ListeUtilisateurSingleton uniqueInstance;
 	private ArrayList<Utilisateur> listeUtilisateur;
+	private UtilisateurDAO dao;
 	
 	private ListeUtilisateurSingleton()
 	{
@@ -87,6 +90,19 @@ public class ListeUtilisateurSingleton {
 	public void supprimerUtilisateur(Utilisateur user)
 	{
 		this.listeUtilisateur.remove(user);
+	}
+
+	public void setDao(JDBCUtilisateurDAO jdbcU) {
+		this.dao = jdbcU;
+	}
+
+	public boolean sauvegarderUtilisateur (){
+		return this.dao.sauvegarderBDD(this.listeUtilisateur);
+	}
+
+	public boolean chargerUtilisateur() {
+		this.listeUtilisateur=this.dao.chargerBDD();
+		return true;
 	}
 	
 }
